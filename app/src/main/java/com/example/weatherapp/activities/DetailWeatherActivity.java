@@ -1,10 +1,12 @@
-package com.example.weatherapp;
+package com.example.weatherapp.activities;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toolbar;
+
+import com.example.weatherapp.R;
+import com.example.weatherapp.adapters.ViewPagerAdapter;
 
 public class DetailWeatherActivity extends AppCompatActivity {
     private TabLayout tabLayout;
