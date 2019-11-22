@@ -91,6 +91,59 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top_card">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.219"
+            tools:layout_editor_absoluteX="0dp">
+
+            <net.steamcrafted.materialiconlib.MaterialIconView
+                android:id="@+id/ic_humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="32dp"
+                android:scaleType="center"
+                app:materialIcon="water_percent"
+                app:materialIconColor="@color/darkPurple"
+                app:materialIconSize="50dp" />
+
+            <net.steamcrafted.materialiconlib.MaterialIconView
+                android:id="@+id/ic_wind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="32dp"
+                android:scaleType="center"
+                app:materialIcon="weather_windy"
+                app:materialIconColor="@color/darkPurple"
+                app:materialIconSize="50dp" />
+
+            <net.steamcrafted.materialiconlib.MaterialIconView
+                android:id="@+id/ic_visibility"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="32dp"
+                android:scaleType="center"
+                app:materialIcon="eye_outline"
+                app:materialIconColor="@color/darkPurple"
+                app:materialIconSize="50dp" />
+
+            <net.steamcrafted.materialiconlib.MaterialIconView
+                android:id="@+id/ic_pressure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                app:materialIcon="gauge"
+                app:materialIconColor="@color/darkPurple"
+                app:materialIconSize="50dp" />
+
+        </LinearLayout>
+
+
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
