@@ -65,18 +65,35 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.884" />
 
-        <ImageView
-            android:id="@+id/imageView"
+        <net.steamcrafted.materialiconlib.MaterialIconView
+            android:id="@+id/ic_summary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="26dp"
+            android:scaleType="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tv_weather_temperature"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.259"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.238"
+            app:materialIcon="weather_night"
+            app:materialIconColor="@color/white"
+            app:materialIconSize="96dp" />
+
+        <net.steamcrafted.materialiconlib.MaterialIconView
+            android:id="@+id/ic_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.252"
-            app:srcCompat="@android:drawable/sym_def_app_icon" />
+            app:layout_constraintVertical_bias="1.0"
+            app:materialIcon="information_outline"
+            app:materialIconColor="@color/lightGrey"
+            app:materialIconSize="32dp" />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
