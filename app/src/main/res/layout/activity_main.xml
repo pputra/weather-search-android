@@ -45,7 +45,7 @@
             android:layout_marginEnd="153dp"
             android:layout_marginBottom="68dp"
             android:text="Clear"
-            android:textColor="@color/white"
+            android:textColor="@color/lightGrey"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -95,6 +95,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -102,45 +103,132 @@
             app:layout_constraintVertical_bias="0.219"
             tools:layout_editor_absoluteX="0dp">
 
-            <net.steamcrafted.materialiconlib.MaterialIconView
-                android:id="@+id/ic_humidity"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="32dp"
-                android:scaleType="center"
-                app:materialIcon="water_percent"
-                app:materialIconColor="@color/darkPurple"
-                app:materialIconSize="50dp" />
+                android:layout_marginRight="5dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <net.steamcrafted.materialiconlib.MaterialIconView
-                android:id="@+id/ic_wind"
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/ic_humidity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="center"
+                    app:materialIcon="water_percent"
+                    app:materialIconColor="@color/darkPurple"
+                    app:materialIconSize="50dp" />
+
+                <TextView
+                    android:id="@+id/tv_humidity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="79%"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Humidity"
+                    android:textColor="@color/lightGrey"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="32dp"
-                android:scaleType="center"
-                app:materialIcon="weather_windy"
-                app:materialIconColor="@color/darkPurple"
-                app:materialIconSize="50dp" />
+                android:layout_marginRight="5dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <net.steamcrafted.materialiconlib.MaterialIconView
-                android:id="@+id/ic_visibility"
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/ic_wind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="center"
+                    app:materialIcon="weather_windy"
+                    app:materialIconColor="@color/darkPurple"
+                    app:materialIconSize="50dp" />
+
+                <TextView
+                    android:id="@+id/tv_wind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0.18 mph"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wind Speed"
+                    android:textColor="@color/lightGrey"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="32dp"
-                android:scaleType="center"
-                app:materialIcon="eye_outline"
-                app:materialIconColor="@color/darkPurple"
-                app:materialIconSize="50dp" />
+                android:layout_marginRight="5dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <net.steamcrafted.materialiconlib.MaterialIconView
-                android:id="@+id/ic_pressure"
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/ic_visibility"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="center"
+                    app:materialIcon="eye_outline"
+                    app:materialIconColor="@color/darkPurple"
+                    app:materialIconSize="50dp" />
+
+                <TextView
+                    android:id="@+id/tv_visibility"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="9.32 km"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Visibility"
+                    android:textColor="@color/lightGrey"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleType="center"
-                app:materialIcon="gauge"
-                app:materialIconColor="@color/darkPurple"
-                app:materialIconSize="50dp" />
+                android:gravity="center"
+                android:orientation="vertical">
 
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/ic_pressure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="center"
+                    app:materialIcon="gauge"
+                    app:materialIconColor="@color/darkPurple"
+                    app:materialIconSize="50dp" />
+
+                <TextView
+                    android:id="@+id/tv_pressure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1015.80 mb"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pressure"
+                    android:textColor="@color/lightGrey"
+                    android:textSize="18sp" />
+            </LinearLayout>
         </LinearLayout>
 
 
