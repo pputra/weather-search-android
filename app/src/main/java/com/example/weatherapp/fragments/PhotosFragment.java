@@ -10,14 +10,15 @@ import android.widget.TextView;
 
 import com.example.weatherapp.R;
 
+import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TodayFragment extends Fragment {
-    private TextView mtextViewMessage;
+public class PhotosFragment extends Fragment {
+    private TextView mTextViewMessage;
 
-    public TodayFragment() {
+    public PhotosFragment() {
         // Required empty public constructor
     }
 
@@ -26,12 +27,10 @@ public class TodayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_today, container, false);
-        mtextViewMessage = view.findViewById(R.id.tv_today_message);
+        View view = inflater.inflate(R.layout.fragment_photos, container, false);
 
-        // this is how we get a key from intent
-        // tv__message.setText(getArguments().getString("message"));
-        mtextViewMessage.setText("this is TodayFragment");
+        mTextViewMessage = view.findViewById(R.id.tv_photos_message);
+        mTextViewMessage.setText("This is PhotosFragment");
 
         return view;
     }
