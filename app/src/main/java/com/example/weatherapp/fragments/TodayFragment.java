@@ -15,8 +15,6 @@ import com.example.weatherapp.R;
  * A simple {@link Fragment} subclass.
  */
 public class TodayFragment extends Fragment {
-    private TextView mtextViewMessage;
-
     public TodayFragment() {
         // Required empty public constructor
     }
@@ -27,11 +25,9 @@ public class TodayFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_today, container, false);
-        mtextViewMessage = view.findViewById(R.id.tv_today_message);
 
         // this is how we get a key from intent
         // tv__message.setText(getArguments().getString("message"));
-        mtextViewMessage.setText("this is TodayFragment");
 
         return view;
     }
