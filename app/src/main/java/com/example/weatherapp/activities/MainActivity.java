@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.weatherapp.R;
 import com.example.weatherapp.adapters.ViewPagerFavoriteAdapter;
+import com.example.weatherapp.models.Weather;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,9 +47,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void fetchWeatherData() {
-        List<String> favCityList = new ArrayList<>();
-        favCityList.add("Los Angeles, CA, USA");
-        favCityList.add("San Diego");
+        List<Weather> favCityList = new ArrayList<>();
+        Weather currWeather = new Weather("Los Angeles", 34.0322, -118.2836);
+        Weather dummyWeather = new Weather("San Diego", 34.0322, -118.2836);
+        favCityList.add(currWeather);
+        favCityList.add(dummyWeather);
 
         //TODO: fetch current location and favorited cities from SharedPreferences
         mViewPagerFavoriteAdapter.setFavCityList(favCityList);

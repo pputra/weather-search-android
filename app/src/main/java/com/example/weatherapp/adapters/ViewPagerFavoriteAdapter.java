@@ -7,12 +7,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.weatherapp.fragments.FavoriteFragment;
+import com.example.weatherapp.models.Weather;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ViewPagerFavoriteAdapter extends FragmentPagerAdapter {
-    private List<String> mFavCityList = new ArrayList<>();
+    private List<Weather> mFavCityList = new ArrayList<>();
 
     public ViewPagerFavoriteAdapter(FragmentManager fm) {
         super(fm);
@@ -21,7 +22,8 @@ public class ViewPagerFavoriteAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Bundle bundle = new Bundle();
-        bundle.putString("location", mFavCityList.get(position));
+        Weather curr = mFavCityList.get(position);
+        bundle.putString("location", curr.getCity());
         FavoriteFragment favoriteFragment = new FavoriteFragment();
 
         favoriteFragment.setArguments(bundle);
@@ -40,7 +42,7 @@ public class ViewPagerFavoriteAdapter extends FragmentPagerAdapter {
         return "Fragment " + position;
     }
 
-    public void setFavCityList(List<String> list) {
+    public void setFavCityList(List<Weather> list) {
         mFavCityList = list;
         notifyDataSetChanged();
     }
