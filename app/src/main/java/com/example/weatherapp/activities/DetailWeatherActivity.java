@@ -1,5 +1,6 @@
 package com.example.weatherapp.activities;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -26,9 +27,7 @@ public class DetailWeatherActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tablayout_detail_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        setUpActionBar();
     }
 
     @Override
@@ -41,5 +40,14 @@ public class DetailWeatherActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void setUpActionBar() {
+        Intent intent = getIntent();
+        setTitle(intent.getStringExtra("ACTION_BAR_TITLE"));
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 }

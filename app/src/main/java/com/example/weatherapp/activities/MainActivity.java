@@ -1,10 +1,8 @@
 package com.example.weatherapp.activities;
 
-import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.weatherapp.R;
@@ -39,11 +37,6 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
 
         fetchWeatherData();
-    }
-
-    public void showDetailWeather(View v) {
-        Intent intentThatShowDetailWeatherActivity = new Intent(this, DetailWeatherActivity.class);
-        startActivity(intentThatShowDetailWeatherActivity);
     }
 
     public void fetchWeatherData() {

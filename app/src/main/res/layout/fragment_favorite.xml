@@ -9,7 +9,7 @@
     tools:context=".activities.MainActivity">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/top_card"
+        android:id="@+id/fav_top_card"
         android:layout_width="400dp"
         android:layout_height="200dp"
         android:layout_marginStart="1dp"
@@ -17,8 +17,7 @@
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="15dp"
         android:background="@color/colorSecondaryDark"
-        android:onClick="showDetailWeather"
-        app:layout_constraintBottom_toTopOf="@+id/mid_card"
+        app:layout_constraintBottom_toTopOf="@+id/fav_mid_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -91,7 +90,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/mid_card"
+        android:id="@+id/fav_mid_card"
         android:layout_width="400dp"
         android:layout_height="160dp"
         android:layout_marginStart="1dp"
@@ -101,7 +100,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_card">
+        app:layout_constraintTop_toBottomOf="@+id/fav_top_card">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -254,7 +253,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/bot_card"
+        android:id="@+id/fav_bot_card"
         android:layout_width="400dp"
         android:layout_height="390dp"
         android:layout_marginStart="1dp"
@@ -265,7 +264,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mid_card"
-        app:layout_constraintVertical_bias="0.0"></android.support.constraint.ConstraintLayout>
+        app:layout_constraintTop_toBottomOf="@+id/fav_mid_card"
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>
