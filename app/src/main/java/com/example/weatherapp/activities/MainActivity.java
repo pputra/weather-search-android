@@ -1,6 +1,5 @@
 package com.example.weatherapp.activities;
 
-import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,39 +33,60 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        // TODO: replace toast with a progressbar
         Toast toast = Toast.makeText(getApplicationContext(),
                 "fetching weather data....",
                 Toast.LENGTH_SHORT);
 
         toast.show();
 
-        fetchWeatherData();
+        showWeatherData();
     }
 
-    public void fetchWeatherData() {
+    public void showWeatherData() {
         mViewPagerFavoriteAdapter.clearFavCity();
-        NetworkUtils.fetchCurrLocation(this, new Callbacks.VolleyCallback() {
+        NetworkUtils.fetchCurrLocation(getApplicationContext(), new Callbacks.VolleyCallback() {
             @Override
-            public void onSuccess(Context context, JSONObject response) {
+            public void onSuccess(JSONObject response) {
                 try {
-                    Weather weather = new Weather(response.getString("city"), response.getDouble("lat"), response.getDouble("lon"));
+                    String city = response.getString("city");
+                    double lat = response.getDouble("lat");
+                    double lon = response.getDouble("lon");
+                    final Weather weather = new Weather(city, lat, lon);
+
+                    fetchWeatherData(weather, lat, lon);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+    }
+
+    public void fetchWeatherData(final Weather weather, double lat, final double lon) {
+        NetworkUtils.fetchWeatherByCoordinate(lat, lon, getApplicationContext(), new Callbacks.VolleyCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    response = response.getJSONObject("weatherData");
+                    JSONObject currentlyObj = response.getJSONObject("currently");
+
+                    weather.setIcon(currentlyObj.getString("icon"));
+                    weather.setTemperature((int) currentlyObj.getDouble("temperature"));
+                    weather.setSummary(currentlyObj.getString("summary"));
+                    weather.setHumidity(currentlyObj.getDouble("humidity"));
+                    weather.setWindSpeed(currentlyObj.getDouble("windSpeed"));
+                    weather.setVisibility(currentlyObj.getDouble("visibility"));
+                    weather.setPressure(currentlyObj.getDouble("pressure"));
+
                     mViewPagerFavoriteAdapter.addFavCity(weather, 0);
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(Context context, VolleyError error) {}
-        });
-
-        NetworkUtils.fetchCurrLocation(this, new Callbacks.VolleyCallback() {
-            @Override
-            public void onSuccess(Context context, JSONObject response) {
-                try {
-                    Weather weather = new Weather("San Diego", response.getDouble("lat"), response.getDouble("lon"));
-                    mViewPagerFavoriteAdapter.addFavCity(weather);
+                    // TODO: get favorite cities from SharedPreferences and fetch the weather data
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -74,25 +94,9 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onError(Context context, VolleyError error) {}
-        });
-
-        NetworkUtils.fetchCurrLocation(this, new Callbacks.VolleyCallback() {
-            @Override
-            public void onSuccess(Context context, JSONObject response) {
-                try {
-                    Weather weather = new Weather("Houston", response.getDouble("lat"), response.getDouble("lon"));
-                    mViewPagerFavoriteAdapter.addFavCity(weather);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onError(VolleyError error) {
+                error.printStackTrace();
             }
-
-            @Override
-            public void onError(Context context, VolleyError error) {}
         });
-
-        //TODO: fetch current location and favorited cities from SharedPreferences
     }
 }

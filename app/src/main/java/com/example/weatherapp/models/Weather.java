@@ -67,4 +67,70 @@ public class Weather {
     public double getPressure() {
         return pressure;
     }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public void setLon(double lon) {
+        this.lon = lon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public void setTemperature(int temperature) {
+        this.temperature = temperature;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public void setHumidity(double humidity) {
+        this.humidity = humidity;
+    }
+
+    public void setWindSpeed(double windSpeed) {
+        this.windSpeed = windSpeed;
+    }
+
+    public void setVisibility(double visibility) {
+        this.visibility = visibility;
+    }
+
+    public void setPressure(double pressure) {
+        this.pressure = pressure;
+    }
+
+    @Override
+    public String toString() {
+        return "Weather{" +
+                "city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", country='" + country + '\'' +
+                ", lat=" + lat +
+                ", lon=" + lon +
+                ", icon='" + icon + '\'' +
+                ", temperature=" + temperature +
+                ", summary='" + summary + '\'' +
+                ", humidity=" + humidity +
+                ", windSpeed=" + windSpeed +
+                ", visibility=" + visibility +
+                ", pressure=" + pressure +
+                '}';
+    }
 }
