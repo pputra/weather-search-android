@@ -24,6 +24,7 @@ public class ViewPagerFavoriteAdapter extends FragmentPagerAdapter {
         Bundle bundle = new Bundle();
         Weather curr = mFavCityList.get(position);
         bundle.putString("location", curr.getCity());
+        bundle.putSerializable("Weather", curr);
         FavoriteFragment favoriteFragment = new FavoriteFragment();
 
         favoriteFragment.setArguments(bundle);

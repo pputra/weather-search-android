@@ -59,7 +59,7 @@
             app:layout_constraintVertical_bias="0.884" />
 
         <net.steamcrafted.materialiconlib.MaterialIconView
-            android:id="@+id/ic_summary"
+            android:id="@+id/ic_weather_summary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="center"
