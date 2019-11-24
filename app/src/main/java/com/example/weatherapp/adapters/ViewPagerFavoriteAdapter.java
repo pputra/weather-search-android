@@ -42,8 +42,18 @@ public class ViewPagerFavoriteAdapter extends FragmentPagerAdapter {
         return "Fragment " + position;
     }
 
-    public void setFavCityList(List<Weather> list) {
-        mFavCityList = list;
+    public void addFavCity(Weather weather) {
+        mFavCityList.add(weather);
+        notifyDataSetChanged();
+    }
+
+    public void addFavCity(Weather weather, int i) {
+        mFavCityList.add(i, weather);
+        notifyDataSetChanged();
+    }
+
+    public void clearFavCity() {
+        mFavCityList = new ArrayList<>();
         notifyDataSetChanged();
     }
 }
