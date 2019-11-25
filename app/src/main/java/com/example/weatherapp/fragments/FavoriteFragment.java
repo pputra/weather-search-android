@@ -1,6 +1,7 @@
 package com.example.weatherapp.fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,9 @@ import com.example.weatherapp.models.Weather;
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 import net.steamcrafted.materialiconlib.MaterialIconView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,8 +33,10 @@ public class FavoriteFragment extends Fragment {
     TextView mTextViewWindSpeed;
     TextView mTextViewVisibility;
     TextView mTextViewPressure;
-
     ConstraintLayout mLayoutTopCard;
+
+    Map<String, MaterialDrawableBuilder.IconValue> mIconMap = new HashMap<>();
+
     public FavoriteFragment() {
     }
 
@@ -59,12 +65,25 @@ public class FavoriteFragment extends Fragment {
         mTextViewWindSpeed = view.findViewById(R.id.tv_wind);
         mTextViewVisibility = view.findViewById(R.id.tv_visibility);
         mTextViewPressure = view.findViewById(R.id.tv_pressure);
+
+        mIconMap.put("clear-day", MaterialDrawableBuilder.IconValue.WEATHER_SUNNY);
+        mIconMap.put("clear-night", MaterialDrawableBuilder.IconValue.WEATHER_NIGHT);
+        mIconMap.put("rain", MaterialDrawableBuilder.IconValue.WEATHER_RAINY);
+        mIconMap.put("sleet", MaterialDrawableBuilder.IconValue.WEATHER_SNOWY_RAINY);
+        mIconMap.put("snow", MaterialDrawableBuilder.IconValue.WEATHER_SNOWY);
+        mIconMap.put("wind", MaterialDrawableBuilder.IconValue.WEATHER_WINDY_VARIANT);
+        mIconMap.put("fog", MaterialDrawableBuilder.IconValue.WEATHER_FOG);
+        mIconMap.put("cloudy", MaterialDrawableBuilder.IconValue.WEATHER_CLOUDY);
+        mIconMap.put("partly-cloudy-night", MaterialDrawableBuilder.IconValue.WEATHER_PARTLYCLOUDY);
+        mIconMap.put("partly-cloudy-day", MaterialDrawableBuilder.IconValue.WEATHER_PARTLYCLOUDY);
     }
 
     private void setViews(final Weather weather) {
         mTextViewWeatherLocation.setText(weather.getCity());
-        //TODO: create enum for icon
-        mIconWeatherSummary.setIcon(MaterialDrawableBuilder.IconValue.WEATHER_SUNNY);
+        mIconWeatherSummary.setIcon(mIconMap.get(weather.getIcon()));
+
+        if (weather.getIcon().equals("clear-day")) mIconWeatherSummary.setColor(Color.YELLOW);
+
         mTextViewWeatherTemperature.setText(weather.getTemperature() + "°F");
         mTextViewWeatherSummary.setText(weather.getSummary());
         mTextViewHumidity.setText(Double.toString(weather.getHumidity()));
