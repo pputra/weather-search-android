@@ -133,10 +133,11 @@ public class Weather implements Serializable {
         for (int i = 0; i < dailyDatalist.length(); i++) {
             JSONObject dailyData = dailyDatalist.getJSONObject(i);
             int time = dailyData.getInt("time");
+            String icon = dailyData.getString("icon");
             int minTemperature = (int) Math.round(dailyData.getDouble("temperatureLow"));
             int maxTemperature = (int) Math.round(dailyData.getDouble("temperatureHigh"));
 
-            this.dailyDataList.add(new DailyData(time, minTemperature, maxTemperature));
+            this.dailyDataList.add(new DailyData(time, icon, minTemperature, maxTemperature));
         }
     }
 
@@ -161,17 +162,23 @@ public class Weather implements Serializable {
 
     class DailyData {
         private int time;
+        private String icon;
         private int minTemperature;
         private int maxTemperature;
 
-        public DailyData(int time, int minTemperature, int maxTemperature) {
+        public DailyData(int time, String icon, int minTemperature, int maxTemperature) {
             this.time = time;
+            this.icon = icon;
             this.minTemperature = minTemperature;
             this.maxTemperature = maxTemperature;
         }
 
         public int getTime() {
             return time;
+        }
+
+        public String getIcon() {
+            return icon;
         }
 
         public int getMinTemperature() {
@@ -186,6 +193,7 @@ public class Weather implements Serializable {
         public String toString() {
             return "DailyData{" +
                     "time=" + time +
+                    ", icon='" + icon + '\'' +
                     ", minTemperature=" + minTemperature +
                     ", maxTemperature=" + maxTemperature +
                     '}';
