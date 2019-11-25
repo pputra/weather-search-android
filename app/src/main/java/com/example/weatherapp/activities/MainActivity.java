@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private void setDotsSlider() {
         mNumDots = mViewPagerFavoriteAdapter.getCount();
         mImageViewDots = new ImageView[mNumDots];
+        mDotsSlider.removeAllViews();
 
         for (int i = 0; i < mNumDots; i++) {
             mImageViewDots[i] = new ImageView(this);
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             mDotsSlider.addView(mImageViewDots[i], params);
         }
 
-        mImageViewDots[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot ));
+        mImageViewDots[mViewPagerFavorite.getCurrentItem()].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot ));
 
         mViewPagerFavorite.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -130,7 +131,8 @@ public class MainActivity extends AppCompatActivity {
                     weather.setPressure(currentlyObj.getDouble("pressure"));
 
                     mViewPagerFavoriteAdapter.addFavCity(weather, 0);
-                    mViewPagerFavoriteAdapter.addFavCity(weather, 0);
+                    mViewPagerFavoriteAdapter.addFavCity(weather);
+                    mViewPagerFavoriteAdapter.addFavCity(weather);
 
                     // TODO: get favorite cities from SharedPreferences and fetch the weather data
                     setDotsSlider();
