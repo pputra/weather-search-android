@@ -1,8 +1,11 @@
 package com.example.weatherapp.activities;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -18,6 +21,9 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPagerFavorite;
     private ViewPagerFavoriteAdapter mViewPagerFavoriteAdapter;
+    private LinearLayout mDotsSlider;
+    private int mNumDots;
+    private ImageView[] mImageViewDots;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mViewPagerFavorite = findViewById(R.id.view_pager_favorite);
+        mDotsSlider = findViewById(R.id.dots_slider);
         mViewPagerFavoriteAdapter = new ViewPagerFavoriteAdapter(getSupportFragmentManager());
         mViewPagerFavorite.setAdapter(mViewPagerFavoriteAdapter);
     }
@@ -41,6 +48,44 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
 
         showWeatherData();
+    }
+
+    private void setDotsSlider() {
+        mNumDots = mViewPagerFavoriteAdapter.getCount();
+        mImageViewDots = new ImageView[mNumDots];
+
+        for (int i = 0; i < mNumDots; i++) {
+            mImageViewDots[i] = new ImageView(this);
+            mImageViewDots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot));
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(16, 0,16, 0);
+
+            mDotsSlider.addView(mImageViewDots[i], params);
+        }
+
+        mImageViewDots[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot ));
+
+        mViewPagerFavorite.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                for (int i = 0; i < mNumDots; i++) {
+                    mImageViewDots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot));
+                }
+
+                mImageViewDots[position].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot ));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
     }
 
     public void showWeatherData() {
@@ -85,8 +130,10 @@ public class MainActivity extends AppCompatActivity {
                     weather.setPressure(currentlyObj.getDouble("pressure"));
 
                     mViewPagerFavoriteAdapter.addFavCity(weather, 0);
+                    mViewPagerFavoriteAdapter.addFavCity(weather, 0);
 
                     // TODO: get favorite cities from SharedPreferences and fetch the weather data
+                    setDotsSlider();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
