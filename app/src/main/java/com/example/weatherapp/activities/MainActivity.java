@@ -15,6 +15,7 @@ import com.example.weatherapp.models.Weather;
 import com.example.weatherapp.utils.Callbacks;
 import com.example.weatherapp.utils.NetworkUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -121,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     response = response.getJSONObject("weatherData");
                     JSONObject currentlyObj = response.getJSONObject("currently");
+                    JSONArray dailyDataList = response.getJSONObject("daily").getJSONArray("data");
 
                     weather.setIcon(currentlyObj.getString("icon"));
                     weather.setTemperature((int) currentlyObj.getDouble("temperature"));
@@ -129,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     weather.setWindSpeed(currentlyObj.getDouble("windSpeed"));
                     weather.setVisibility(currentlyObj.getDouble("visibility"));
                     weather.setPressure(currentlyObj.getDouble("pressure"));
+                    weather.setDailyDataList(dailyDataList);
 
                     mViewPagerFavoriteAdapter.addFavCity(weather, 0);
                     mViewPagerFavoriteAdapter.addFavCity(weather);

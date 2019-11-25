@@ -1,6 +1,12 @@
 package com.example.weatherapp.models;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Weather implements Serializable {
     private String city;
@@ -15,6 +21,7 @@ public class Weather implements Serializable {
     private double windSpeed;
     private double visibility;
     private double pressure;
+    List<DailyData> dailyDataList;
 
     public Weather(String city, double lat, double lon) {
         this.city = city;
@@ -118,6 +125,21 @@ public class Weather implements Serializable {
         this.pressure = pressure;
     }
 
+    public void setDailyDataList(JSONArray dailyDatalist) throws JSONException {
+        this.dailyDataList = new ArrayList<>();
+
+
+
+        for (int i = 0; i < dailyDatalist.length(); i++) {
+            JSONObject dailyData = dailyDatalist.getJSONObject(i);
+            int time = dailyData.getInt("time");
+            int minTemperature = (int) Math.round(dailyData.getDouble("temperatureLow"));
+            int maxTemperature = (int) Math.round(dailyData.getDouble("temperatureHigh"));
+
+            this.dailyDataList.add(new DailyData(time, minTemperature, maxTemperature));
+        }
+    }
+
     @Override
     public String toString() {
         return "Weather{" +
@@ -133,6 +155,40 @@ public class Weather implements Serializable {
                 ", windSpeed=" + windSpeed +
                 ", visibility=" + visibility +
                 ", pressure=" + pressure +
+                ", dailyDataList=" + dailyDataList +
                 '}';
+    }
+
+    class DailyData {
+        private int time;
+        private int minTemperature;
+        private int maxTemperature;
+
+        public DailyData(int time, int minTemperature, int maxTemperature) {
+            this.time = time;
+            this.minTemperature = minTemperature;
+            this.maxTemperature = maxTemperature;
+        }
+
+        public int getTime() {
+            return time;
+        }
+
+        public int getMinTemperature() {
+            return minTemperature;
+        }
+
+        public int getMaxTemperature() {
+            return maxTemperature;
+        }
+
+        @Override
+        public String toString() {
+            return "DailyData{" +
+                    "time=" + time +
+                    ", minTemperature=" + minTemperature +
+                    ", maxTemperature=" + maxTemperature +
+                    '}';
+        }
     }
 }
