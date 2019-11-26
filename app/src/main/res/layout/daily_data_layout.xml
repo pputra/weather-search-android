@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="6dp"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_daily_data_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="72dp"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+        <net.steamcrafted.materialiconlib.MaterialIconView
+            android:id="@+id/ic_daily_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="22dp"
+            android:scaleType="center"
+            app:materialIcon="weather_night"
+            app:materialIconColor="@color/white"
+            app:materialIconSize="30dp" />
+        <TextView
+            android:id="@+id/tv_daily_data_min_temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="44dp"
+            android:textColor="@color/white"
+            android:textSize="28sp" />
+        <TextView
+            android:id="@+id/tv_daily_data_max_temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="28sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:background="@color/lightGrey"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+</LinearLayout>

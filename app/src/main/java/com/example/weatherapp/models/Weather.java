@@ -141,6 +141,10 @@ public class Weather implements Serializable {
         }
     }
 
+    public List<DailyData> getDailyDataList() {
+        return dailyDataList;
+    }
+
     @Override
     public String toString() {
         return "Weather{" +
@@ -160,7 +164,7 @@ public class Weather implements Serializable {
                 '}';
     }
 
-    class DailyData implements Serializable {
+    public class DailyData implements Serializable {
         private int time;
         private String icon;
         private int minTemperature;

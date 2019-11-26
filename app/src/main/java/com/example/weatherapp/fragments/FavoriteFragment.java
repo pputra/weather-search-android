@@ -1,5 +1,6 @@
 package com.example.weatherapp.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.weatherapp.R;
@@ -34,6 +36,7 @@ public class FavoriteFragment extends Fragment {
     TextView mTextViewVisibility;
     TextView mTextViewPressure;
     ConstraintLayout mLayoutTopCard;
+    LinearLayout mLayoutDailyData;
 
     Map<String, MaterialDrawableBuilder.IconValue> mIconMap = new HashMap<>();
 
@@ -50,7 +53,9 @@ public class FavoriteFragment extends Fragment {
 
         Weather weather = (Weather) getArguments().getSerializable("Weather");
 
-        setViews(weather);
+        setTopCard(weather);
+        setMidCard(weather);
+        setBotCard(weather);
 
         return view;
     }
@@ -65,6 +70,7 @@ public class FavoriteFragment extends Fragment {
         mTextViewWindSpeed = view.findViewById(R.id.tv_wind);
         mTextViewVisibility = view.findViewById(R.id.tv_visibility);
         mTextViewPressure = view.findViewById(R.id.tv_pressure);
+        mLayoutDailyData = view.findViewById(R.id.layout_daily_data);
 
         mIconMap.put("clear-day", MaterialDrawableBuilder.IconValue.WEATHER_SUNNY);
         mIconMap.put("clear-night", MaterialDrawableBuilder.IconValue.WEATHER_NIGHT);
@@ -78,7 +84,7 @@ public class FavoriteFragment extends Fragment {
         mIconMap.put("partly-cloudy-day", MaterialDrawableBuilder.IconValue.WEATHER_PARTLYCLOUDY);
     }
 
-    private void setViews(final Weather weather) {
+    private void setTopCard(final Weather weather) {
         mTextViewWeatherLocation.setText(weather.getCity());
         mIconWeatherSummary.setIcon(mIconMap.get(weather.getIcon()));
 
@@ -86,10 +92,6 @@ public class FavoriteFragment extends Fragment {
 
         mTextViewWeatherTemperature.setText(weather.getTemperature() + "°F");
         mTextViewWeatherSummary.setText(weather.getSummary());
-        mTextViewHumidity.setText(Double.toString(weather.getHumidity()));
-        mTextViewWindSpeed.setText(Double.toString(weather.getWindSpeed()));
-        mTextViewVisibility.setText(Double.toString(weather.getVisibility()));
-        mTextViewPressure.setText(Double.toString(weather.getPressure()));
 
         mLayoutTopCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +101,35 @@ public class FavoriteFragment extends Fragment {
                 startActivity(intentThatShowsDetailWeatherActivity);
             }
         });
+    }
+
+    private void setMidCard(final Weather weather) {
+        mTextViewHumidity.setText(Double.toString(weather.getHumidity()));
+        mTextViewWindSpeed.setText(Double.toString(weather.getWindSpeed()));
+        mTextViewVisibility.setText(Double.toString(weather.getVisibility()));
+        mTextViewPressure.setText(Double.toString(weather.getPressure()));
+    }
+
+    private void setBotCard(final Weather weather) {
+        for (Weather.DailyData dailyData : weather.getDailyDataList()) {
+            LayoutInflater dailyDataViewInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LinearLayout dailyDataView = (LinearLayout) dailyDataViewInflater.inflate(R.layout.daily_data_layout, null);
+
+            TextView textViewDailyDataDate = dailyDataView.findViewById(R.id.tv_daily_data_date);
+            textViewDailyDataDate.setText(Integer.toString(dailyData.getTime()));
+
+            MaterialIconView materialIconViewDailyDataIcon = dailyDataView.findViewById(R.id.ic_daily_data);
+            materialIconViewDailyDataIcon.setIcon(mIconMap.get(dailyData.getIcon()));
+            if (dailyData.getIcon().equals("clear-day")) materialIconViewDailyDataIcon.setColor(Color.YELLOW);
+
+            TextView textViewDailyDataMinTemperature = dailyDataView.findViewById(R.id.tv_daily_data_min_temperature);
+            textViewDailyDataMinTemperature.setText(Integer.toString(dailyData.getMinTemperature()));
+
+            TextView textViewDailyDataMaxTemperature = dailyDataView.findViewById(R.id.tv_daily_data_max_temperature);
+            textViewDailyDataMaxTemperature.setText(Integer.toString(dailyData.getMaxTemperature()));
+
+            mLayoutDailyData.addView(dailyDataView);
+        }
     }
 
 }
