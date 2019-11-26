@@ -10,9 +10,9 @@ import com.example.weatherapp.fragments.PhotosFragment;
 import com.example.weatherapp.fragments.TodayFragment;
 import com.example.weatherapp.fragments.WeeklyFragment;
 
-public class ViewPagerAdapter extends FragmentPagerAdapter {
+public class ViewPagerDetailAdapter extends FragmentPagerAdapter {
 
-    public ViewPagerAdapter(FragmentManager fm) {
+    public ViewPagerDetailAdapter(FragmentManager fm) {
         super(fm);
     }
 

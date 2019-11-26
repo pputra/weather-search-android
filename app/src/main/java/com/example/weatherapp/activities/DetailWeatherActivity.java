@@ -9,20 +9,20 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.weatherapp.R;
-import com.example.weatherapp.adapters.ViewPagerAdapter;
+import com.example.weatherapp.adapters.ViewPagerDetailAdapter;
 
 public class DetailWeatherActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private ViewPagerAdapter viewPagerAdapter;
+    private ViewPagerDetailAdapter viewPagerDetailAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_weather);
 
         viewPager = findViewById(R.id.pager);
-        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(viewPagerAdapter);
+        viewPagerDetailAdapter = new ViewPagerDetailAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(viewPagerDetailAdapter);
 
         tabLayout = findViewById(R.id.tablayout_detail_tabs);
         tabLayout.setupWithViewPager(viewPager);

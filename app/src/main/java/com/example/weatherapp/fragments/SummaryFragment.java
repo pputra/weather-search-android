@@ -26,7 +26,7 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FavoriteFragment extends Fragment {
+public class SummaryFragment extends Fragment {
     TextView mTextViewWeatherLocation;
     MaterialIconView mIconWeatherSummary;
     TextView mTextViewWeatherTemperature;
@@ -40,14 +40,14 @@ public class FavoriteFragment extends Fragment {
 
     Map<String, MaterialDrawableBuilder.IconValue> mIconMap = new HashMap<>();
 
-    public FavoriteFragment() {
+    public SummaryFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view =  inflater.inflate(R.layout.fragment_favorite, container, false);
+        final View view =  inflater.inflate(R.layout.fragment_summary, container, false);
 
         initViews(view);
 

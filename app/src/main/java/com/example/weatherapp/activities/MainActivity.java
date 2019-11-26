@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.example.weatherapp.R;
-import com.example.weatherapp.adapters.ViewPagerFavoriteAdapter;
+import com.example.weatherapp.adapters.ViewPagerSummaryAdapter;
 import com.example.weatherapp.models.Weather;
 import com.example.weatherapp.utils.Callbacks;
 import com.example.weatherapp.utils.NetworkUtils;
@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPagerFavorite;
-    private ViewPagerFavoriteAdapter mViewPagerFavoriteAdapter;
+    private ViewPagerSummaryAdapter mViewPagerSummaryAdapter;
     private LinearLayout mDotsSlider;
     private int mNumDots;
     private ImageView[] mImageViewDots;
@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPagerFavorite = findViewById(R.id.view_pager_favorite);
         mDotsSlider = findViewById(R.id.dots_slider);
-        mViewPagerFavoriteAdapter = new ViewPagerFavoriteAdapter(getSupportFragmentManager());
-        mViewPagerFavorite.setAdapter(mViewPagerFavoriteAdapter);
+        mViewPagerSummaryAdapter = new ViewPagerSummaryAdapter(getSupportFragmentManager());
+        mViewPagerFavorite.setAdapter(mViewPagerSummaryAdapter);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setDotsSlider() {
-        mNumDots = mViewPagerFavoriteAdapter.getCount();
+        mNumDots = mViewPagerSummaryAdapter.getCount();
         mImageViewDots = new ImageView[mNumDots];
         mDotsSlider.removeAllViews();
 
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showWeatherData() {
-        mViewPagerFavoriteAdapter.clearFavCity();
+        mViewPagerSummaryAdapter.clearFavCity();
         NetworkUtils.fetchCurrLocation(getApplicationContext(), new Callbacks.VolleyCallback() {
             @Override
             public void onSuccess(JSONObject response) {
@@ -133,9 +133,9 @@ public class MainActivity extends AppCompatActivity {
                     weather.setPressure(currentlyObj.getDouble("pressure"));
                     weather.setDailyDataList(dailyDataList);
 
-                    mViewPagerFavoriteAdapter.addFavCity(weather, 0);
-                    mViewPagerFavoriteAdapter.addFavCity(weather);
-                    mViewPagerFavoriteAdapter.addFavCity(weather);
+                    mViewPagerSummaryAdapter.addFavCity(weather, 0);
+                    mViewPagerSummaryAdapter.addFavCity(weather);
+                    mViewPagerSummaryAdapter.addFavCity(weather);
 
                     // TODO: get favorite cities from SharedPreferences and fetch the weather data
                     setDotsSlider();

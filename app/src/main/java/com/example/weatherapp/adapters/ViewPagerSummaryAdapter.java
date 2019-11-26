@@ -6,16 +6,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.weatherapp.fragments.FavoriteFragment;
+import com.example.weatherapp.fragments.SummaryFragment;
 import com.example.weatherapp.models.Weather;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewPagerFavoriteAdapter extends FragmentPagerAdapter {
+public class ViewPagerSummaryAdapter extends FragmentPagerAdapter {
     private List<Weather> mFavCityList = new ArrayList<>();
 
-    public ViewPagerFavoriteAdapter(FragmentManager fm) {
+    public ViewPagerSummaryAdapter(FragmentManager fm) {
         super(fm);
     }
 
@@ -25,10 +25,10 @@ public class ViewPagerFavoriteAdapter extends FragmentPagerAdapter {
         Weather curr = mFavCityList.get(position);
         bundle.putString("location", curr.getCity());
         bundle.putSerializable("Weather", curr);
-        FavoriteFragment favoriteFragment = new FavoriteFragment();
+        SummaryFragment summaryFragment = new SummaryFragment();
 
-        favoriteFragment.setArguments(bundle);
-        return favoriteFragment;
+        summaryFragment.setArguments(bundle);
+        return summaryFragment;
     }
 
     @Override
