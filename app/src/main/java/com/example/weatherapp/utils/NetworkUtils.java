@@ -13,7 +13,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONObject;
 
 public class NetworkUtils {
-    private static final String DEFAULT_HOST = "http://192.168.1.4:3000/api";
+    private static final String DEFAULT_HOST = "http://10.26.168.26:3000/api";
 
     public static void fetchCurrLocation(Context context, final Callbacks.VolleyCallback callback) {
         RequestQueue queue = Volley.newRequestQueue(context);

@@ -160,7 +160,7 @@ public class Weather implements Serializable {
                 '}';
     }
 
-    class DailyData {
+    class DailyData implements Serializable {
         private int time;
         private String icon;
         private int minTemperature;
