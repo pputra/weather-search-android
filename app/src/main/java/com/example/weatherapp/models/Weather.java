@@ -41,6 +41,10 @@ public class Weather implements Serializable {
         return country;
     }
 
+    public String getFullLocation() {
+        return city + ", " + state + ", " + country;
+    }
+
     public double getLat() {
         return lat;
     }

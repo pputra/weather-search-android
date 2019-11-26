@@ -85,7 +85,7 @@ public class SummaryFragment extends Fragment {
     }
 
     private void setTopCard(final Weather weather) {
-        mTextViewWeatherLocation.setText(weather.getCity());
+        mTextViewWeatherLocation.setText(weather.getFullLocation());
         mIconWeatherSummary.setIcon(mIconMap.get(weather.getIcon()));
 
         if (weather.getIcon().equals("clear-day")) mIconWeatherSummary.setColor(Color.YELLOW);
@@ -97,7 +97,7 @@ public class SummaryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intentThatShowsDetailWeatherActivity = new Intent(getContext(), DetailWeatherActivity.class);
-                intentThatShowsDetailWeatherActivity.putExtra("ACTION_BAR_TITLE", weather.getCity());
+                intentThatShowsDetailWeatherActivity.putExtra("ACTION_BAR_TITLE", weather.getFullLocation());
                 startActivity(intentThatShowsDetailWeatherActivity);
             }
         });

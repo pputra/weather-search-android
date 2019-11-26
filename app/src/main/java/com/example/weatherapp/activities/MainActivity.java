@@ -97,10 +97,13 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(JSONObject response) {
                 try {
                     String city = response.getString("city");
+                    String state = response.getString("region");
+                    String country = response.getString("countryCode");
                     double lat = response.getDouble("lat");
                     double lon = response.getDouble("lon");
                     final Weather weather = new Weather(city, lat, lon);
-
+                    weather.setState(state);
+                    weather.setCountry(country);
                     fetchWeatherData(weather, lat, lon);
 
                 } catch (JSONException e) {
