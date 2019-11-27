@@ -5,15 +5,18 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.weatherapp.R;
 import com.example.weatherapp.activities.DetailWeatherActivity;
+import com.example.weatherapp.activities.MainActivity;
 import com.example.weatherapp.models.Weather;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
@@ -37,6 +40,7 @@ public class SummaryFragment extends Fragment {
     TextView mTextViewPressure;
     ConstraintLayout mLayoutTopCard;
     LinearLayout mLayoutDailyData;
+    FloatingActionButton mFloatingActionButtonFavorite;
 
     Map<String, MaterialDrawableBuilder.IconValue> mIconMap = new HashMap<>();
 
@@ -51,11 +55,13 @@ public class SummaryFragment extends Fragment {
 
         initViews(view);
 
-        Weather weather = (Weather) getArguments().getSerializable("Weather");
+        Weather weather = (Weather) getArguments().getSerializable("WEATHER");
+        int adapterIndex = getArguments().getInt("ADAPTER_INDEX");
 
         setTopCard(weather);
         setMidCard(weather);
         setBotCard(weather);
+        setFavButton(adapterIndex, weather);
 
         return view;
     }
@@ -71,6 +77,7 @@ public class SummaryFragment extends Fragment {
         mTextViewVisibility = view.findViewById(R.id.tv_visibility);
         mTextViewPressure = view.findViewById(R.id.tv_pressure);
         mLayoutDailyData = view.findViewById(R.id.layout_daily_data);
+        mFloatingActionButtonFavorite = view.findViewById(R.id.fab_favorite);
 
         mIconMap.put("clear-day", MaterialDrawableBuilder.IconValue.WEATHER_SUNNY);
         mIconMap.put("clear-night", MaterialDrawableBuilder.IconValue.WEATHER_NIGHT);
@@ -136,6 +143,24 @@ public class SummaryFragment extends Fragment {
 
             mLayoutDailyData.addView(dailyDataView);
         }
+    }
+
+    private void setFavButton(final int i, final Weather weather) {
+        if (i == 0) return;
+        mFloatingActionButtonFavorite.show();
+        mFloatingActionButtonFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toast = Toast.makeText(getContext(),
+                        weather.getFullLocation() + " was removed from favorites",
+                        Toast.LENGTH_SHORT);
+
+                toast.show();
+
+                MainActivity activity = (MainActivity) getActivity();
+                activity.removeFromFavoriteByIndex(i);
+            }
+        });
     }
 
 }

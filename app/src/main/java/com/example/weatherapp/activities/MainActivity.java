@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPagerFavorite;
     private ViewPagerSummaryAdapter mViewPagerSummaryAdapter;
     private LinearLayout mDotsSlider;
-    private int mNumDots;
     private ImageView[] mImageViewDots;
 
     @Override
@@ -52,21 +51,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setDotsSlider() {
-        mNumDots = mViewPagerSummaryAdapter.getCount();
-        mImageViewDots = new ImageView[mNumDots];
-        mDotsSlider.removeAllViews();
-
-        for (int i = 0; i < mNumDots; i++) {
-            mImageViewDots[i] = new ImageView(this);
-            mImageViewDots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot));
-
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.setMargins(16, 0,16, 0);
-
-            mDotsSlider.addView(mImageViewDots[i], params);
-        }
-
-        mImageViewDots[mViewPagerFavorite.getCurrentItem()].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot ));
+        resetDotSlider();
 
         mViewPagerFavorite.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -76,7 +61,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                for (int i = 0; i < mNumDots; i++) {
+                int numDots = mViewPagerSummaryAdapter.getCount();
+
+                for (int i = 0; i < numDots; i++) {
                     mImageViewDots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot));
                 }
 
@@ -168,5 +155,37 @@ public class MainActivity extends AppCompatActivity {
                 error.printStackTrace();
             }
         });
+    }
+
+    public void removeFromFavoriteByIndex(int index) {
+        mViewPagerSummaryAdapter.removeFavCity(index);
+        mViewPagerFavorite.setAdapter(mViewPagerSummaryAdapter);
+        mViewPagerFavorite.setCurrentItem(index - 1);
+
+        resetDotSlider();
+    }
+
+    private void resetDotSlider() {
+        int numDots = mViewPagerSummaryAdapter.getCount();
+
+        if (numDots == 0) {
+            mDotsSlider.removeAllViews();
+            return;
+        }
+
+        mImageViewDots = new ImageView[numDots];
+        mDotsSlider.removeAllViews();
+
+        for (int i = 0; i < numDots; i++) {
+            mImageViewDots[i] = new ImageView(this);
+            mImageViewDots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot));
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(16, 0,16, 0);
+
+            mDotsSlider.addView(mImageViewDots[i], params);
+        }
+
+        mImageViewDots[mViewPagerFavorite.getCurrentItem()].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot ));
     }
 }

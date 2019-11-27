@@ -23,8 +23,8 @@ public class ViewPagerSummaryAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         Bundle bundle = new Bundle();
         Weather curr = mFavCityList.get(position);
-        bundle.putString("location", curr.getCity());
-        bundle.putSerializable("Weather", curr);
+        bundle.putInt("ADAPTER_INDEX", position);
+        bundle.putSerializable("WEATHER", curr);
         SummaryFragment summaryFragment = new SummaryFragment();
 
         summaryFragment.setArguments(bundle);
@@ -55,6 +55,11 @@ public class ViewPagerSummaryAdapter extends FragmentPagerAdapter {
 
     public void clearFavCity() {
         mFavCityList = new ArrayList<>();
+        notifyDataSetChanged();
+    }
+
+    public void removeFavCity(int i) {
+        mFavCityList.remove(i);
         notifyDataSetChanged();
     }
 }

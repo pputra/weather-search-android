@@ -20,7 +20,7 @@ import net.steamcrafted.materialiconlib.MaterialIconView;
 public class TodayFragment extends Fragment {
     TextView mTextViewTodayWindSpeed;
     TextView mTextViewTodayPressure;
-    TextView mtextViewTodayPrecipitation;
+    TextView mTextViewTodayPrecipitation;
     TextView mTextViewTodayTemperature;
     MaterialIconView mIconTodaySummary;
     TextView mTextViewTodaySummary;
@@ -54,7 +54,7 @@ public class TodayFragment extends Fragment {
     private void initViews(View view) {
         mTextViewTodayWindSpeed = view.findViewById(R.id.tv_today_windspeed);
         mTextViewTodayPressure = view.findViewById(R.id.tv_today_pressure);
-        mtextViewTodayPrecipitation = view.findViewById(R.id.tv_today_precipitation);
+        mTextViewTodayPrecipitation = view.findViewById(R.id.tv_today_precipitation);
         mTextViewTodayTemperature = view.findViewById(R.id.tv_today_temperature);
         mIconTodaySummary = view.findViewById(R.id.ic_today_summary);
         mTextViewTodaySummary = view.findViewById(R.id.tv_today_summary);
@@ -67,7 +67,7 @@ public class TodayFragment extends Fragment {
     private void setViews(WeatherDetail weatherDetail) {
         mTextViewTodayWindSpeed.setText(Double.toString(weatherDetail.getWindSpeed()));
         mTextViewTodayPressure.setText(Double.toString(weatherDetail.getPressure()));
-        mtextViewTodayPrecipitation.setText(Double.toString(weatherDetail.getPrecipitation()));
+        mTextViewTodayPrecipitation.setText(Double.toString(weatherDetail.getPrecipitation()));
         mTextViewTodayTemperature.setText(weatherDetail.getTemperature() + "°F");
         // TODO: REPLACE WEATHER DETAIL ICON
         mTextViewTodaySummary.setText(weatherDetail.getSummary());
