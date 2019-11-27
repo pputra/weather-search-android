@@ -11,11 +11,25 @@ import android.widget.TextView;
 import com.example.weatherapp.R;
 import com.example.weatherapp.models.WeatherDetail;
 
+import net.steamcrafted.materialiconlib.MaterialIconView;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class TodayFragment extends Fragment {
+    TextView mTextViewTodayWindSpeed;
+    TextView mTextViewTodayPressure;
+    TextView mtextViewTodayPrecipitation;
+    TextView mTextViewTodayTemperature;
+    MaterialIconView mIconTodaySummary;
+    TextView mTextViewTodaySummary;
+    TextView mTextViewTodayHumidity;
+    TextView mTextViewTodayVisibility;
+    TextView mTextViewTodayCloudCover;
+    TextView mTextViewTodayOzone;
+
+
     public TodayFragment() {
         // Required empty public constructor
     }
@@ -27,9 +41,40 @@ public class TodayFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_today, container, false);
 
+        initViews(view);
+
         WeatherDetail weatherDetail = (WeatherDetail) getArguments().getSerializable("WEATHER_DETAIL");
 
+        setViews(weatherDetail);
+
         return view;
+
+    }
+
+    private void initViews(View view) {
+        mTextViewTodayWindSpeed = view.findViewById(R.id.tv_today_windspeed);
+        mTextViewTodayPressure = view.findViewById(R.id.tv_today_pressure);
+        mtextViewTodayPrecipitation = view.findViewById(R.id.tv_today_precipitation);
+        mTextViewTodayTemperature = view.findViewById(R.id.tv_today_temperature);
+        mIconTodaySummary = view.findViewById(R.id.ic_today_summary);
+        mTextViewTodaySummary = view.findViewById(R.id.tv_today_summary);
+        mTextViewTodayHumidity = view.findViewById(R.id.tv_today_humidity);
+        mTextViewTodayVisibility = view.findViewById(R.id.tv_today_visibility);
+        mTextViewTodayCloudCover = view.findViewById(R.id.tv_today_cloud_cover);
+        mTextViewTodayOzone = view.findViewById(R.id.tv_today_ozone);
+    }
+
+    private void setViews(WeatherDetail weatherDetail) {
+        mTextViewTodayWindSpeed.setText(Double.toString(weatherDetail.getWindSpeed()));
+        mTextViewTodayPressure.setText(Double.toString(weatherDetail.getPressure()));
+        mtextViewTodayPrecipitation.setText(Double.toString(weatherDetail.getPrecipitation()));
+        mTextViewTodayTemperature.setText(weatherDetail.getTemperature() + "°F");
+        // TODO: REPLACE WEATHER DETAIL ICON
+        mTextViewTodaySummary.setText(weatherDetail.getSummary());
+        mTextViewTodayHumidity.setText(Double.toString(weatherDetail.getHumidity()));
+        mTextViewTodayVisibility.setText(Double.toString(weatherDetail.getVisibility()));
+        mTextViewTodayCloudCover.setText(Double.toString(weatherDetail.getCloudCover()));
+        mTextViewTodayOzone.setText(Double.toString(weatherDetail.getOzone()));
     }
 
 }
