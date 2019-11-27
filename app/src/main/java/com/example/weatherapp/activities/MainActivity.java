@@ -137,7 +137,22 @@ public class MainActivity extends AppCompatActivity {
                     weather.setDailyDataList(dailyDataList);
 
                     mViewPagerSummaryAdapter.addFavCity(weather, 0);
-                    mViewPagerSummaryAdapter.addFavCity(weather);
+
+                    //TODO: replace these data with actual favorites
+                    Weather weather1 = new Weather("Seattle", 10, 10);
+                    weather1.setIcon("rain");
+                    weather1.setTemperature(45);
+                    weather1.setSummary("raining");
+                    weather1.setHumidity(3);
+                    weather1.setWindSpeed(3);
+                    weather1.setVisibility(1);
+                    weather1.setPressure(1000);
+                    weather1.setDailyDataList(dailyDataList);
+                    weather1.setCountry("US");
+                    weather1.setState("WA");
+
+
+                    mViewPagerSummaryAdapter.addFavCity(weather1);
                     mViewPagerSummaryAdapter.addFavCity(weather);
 
                     // TODO: get favorite cities from SharedPreferences and fetch the weather data

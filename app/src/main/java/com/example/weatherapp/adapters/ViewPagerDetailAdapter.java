@@ -9,16 +9,21 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.example.weatherapp.fragments.PhotosFragment;
 import com.example.weatherapp.fragments.TodayFragment;
 import com.example.weatherapp.fragments.WeeklyFragment;
+import com.example.weatherapp.models.WeatherDetail;
 
 public class ViewPagerDetailAdapter extends FragmentPagerAdapter {
+    WeatherDetail weatherDetail;
 
-    public ViewPagerDetailAdapter(FragmentManager fm) {
+    public ViewPagerDetailAdapter(FragmentManager fm, WeatherDetail weatherDetail) {
         super(fm);
+        this.weatherDetail = weatherDetail;
     }
 
     @Override
     public Fragment getItem(int position) {
         Bundle bundle = new Bundle();
+        bundle.putSerializable("WEATHER_DETAIL", weatherDetail);
+
         switch (position) {
             case 0 :
                 TodayFragment todayFragment = new TodayFragment();

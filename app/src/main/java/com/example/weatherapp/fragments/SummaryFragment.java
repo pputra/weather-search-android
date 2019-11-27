@@ -98,6 +98,12 @@ public class SummaryFragment extends Fragment {
             public void onClick(View v) {
                 Intent intentThatShowsDetailWeatherActivity = new Intent(getContext(), DetailWeatherActivity.class);
                 intentThatShowsDetailWeatherActivity.putExtra("ACTION_BAR_TITLE", weather.getFullLocation());
+                intentThatShowsDetailWeatherActivity.putExtra("CITY", weather.getCity());
+                intentThatShowsDetailWeatherActivity.putExtra("STATE", weather.getState());
+                intentThatShowsDetailWeatherActivity.putExtra("COUNTRY", weather.getCountry());
+                intentThatShowsDetailWeatherActivity.putExtra("LAT", weather.getLat());
+                intentThatShowsDetailWeatherActivity.putExtra("LON", weather.getLon());
+
                 startActivity(intentThatShowsDetailWeatherActivity);
             }
         });

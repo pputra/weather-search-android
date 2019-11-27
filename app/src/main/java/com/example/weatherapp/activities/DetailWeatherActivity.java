@@ -10,8 +10,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.example.weatherapp.R;
 import com.example.weatherapp.adapters.ViewPagerDetailAdapter;
+import com.example.weatherapp.models.WeatherDetail;
+import com.example.weatherapp.utils.Callbacks;
+import com.example.weatherapp.utils.NetworkUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class DetailWeatherActivity extends AppCompatActivity {
     private TabLayout tabLayout;
@@ -20,16 +28,25 @@ public class DetailWeatherActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_detail_weather);
-
-        viewPager = findViewById(R.id.pager);
-        viewPagerDetailAdapter = new ViewPagerDetailAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(viewPagerDetailAdapter);
-
         tabLayout = findViewById(R.id.tablayout_detail_tabs);
-        tabLayout.setupWithViewPager(viewPager);
+        viewPager = findViewById(R.id.pager);
 
         setUpActionBar();
+
+        Intent intent = getIntent();
+        double lat = intent.getDoubleExtra("LAT", 0);
+        double lon = intent.getDoubleExtra("LON", 0);
+        String city = intent.getStringExtra("CITY");
+        String state = intent.getStringExtra("STATE");
+        String country = intent.getStringExtra("COUNTRY");
+
+        WeatherDetail weatherDetail = new WeatherDetail(city, lat, lon);
+        weatherDetail.setState(state);
+        weatherDetail.setCountry(country);
+
+        fetchWeatherDetailData(weatherDetail, lat, lon);
     }
 
     @Override
@@ -66,5 +83,44 @@ public class DetailWeatherActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    public void fetchWeatherDetailData(final WeatherDetail weatherDetail, double lat, final double lon) {
+        NetworkUtils.fetchWeatherByCoordinate(lat, lon, getApplicationContext(), new Callbacks.VolleyCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    response = response.getJSONObject("weatherData");
+                    JSONObject currentlyObj = response.getJSONObject("currently");
+
+                    weatherDetail.setIcon(currentlyObj.getString("icon"));
+                    weatherDetail.setTemperature((int) currentlyObj.getDouble("temperature"));
+                    weatherDetail.setSummary(currentlyObj.getString("summary"));
+                    weatherDetail.setHumidity(currentlyObj.getDouble("humidity"));
+                    weatherDetail.setWindSpeed(currentlyObj.getDouble("windSpeed"));
+                    weatherDetail.setVisibility(currentlyObj.getDouble("visibility"));
+                    weatherDetail.setPressure(currentlyObj.getDouble("pressure"));
+                    weatherDetail.setPrecipitation(currentlyObj.getDouble("precipIntensity"));
+                    weatherDetail.setCloudCover(currentlyObj.getDouble("cloudCover"));
+                    weatherDetail.setOzone(currentlyObj.getDouble("ozone"));
+
+                    setAdapter(weatherDetail);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+    }
+
+    public void setAdapter(WeatherDetail weatherDetail) {
+        viewPagerDetailAdapter = new ViewPagerDetailAdapter(getSupportFragmentManager(), weatherDetail);
+        viewPager.setAdapter(viewPagerDetailAdapter);
+        tabLayout.setupWithViewPager(viewPager);
     }
 }

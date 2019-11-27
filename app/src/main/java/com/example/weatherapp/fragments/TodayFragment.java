@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.weatherapp.R;
+import com.example.weatherapp.models.WeatherDetail;
 
 
 /**
@@ -26,8 +27,7 @@ public class TodayFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_today, container, false);
 
-        // this is how we get a key from intent
-        // tv__message.setText(getArguments().getString("message"));
+        WeatherDetail weatherDetail = (WeatherDetail) getArguments().getSerializable("WEATHER_DETAIL");
 
         return view;
     }
