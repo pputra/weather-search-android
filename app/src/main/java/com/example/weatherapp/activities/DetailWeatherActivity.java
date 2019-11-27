@@ -21,6 +21,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DetailWeatherActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -86,12 +89,11 @@ public class DetailWeatherActivity extends AppCompatActivity {
     }
 
     public void fetchWeatherDetailData(final WeatherDetail weatherDetail, double lat, final double lon) {
-        NetworkUtils.fetchWeatherByCoordinate(lat, lon, getApplicationContext(), new Callbacks.VolleyCallback() {
+        NetworkUtils.fetchWeatherByCoordinate(lat, lon, weatherDetail.getFullLocation(), getApplicationContext(), new Callbacks.VolleyCallback() {
             @Override
             public void onSuccess(JSONObject response) {
                 try {
-                    response = response.getJSONObject("weatherData");
-                    JSONObject currentlyObj = response.getJSONObject("currently");
+                    JSONObject currentlyObj = response.getJSONObject("weatherData").getJSONObject("currently");
 
                     weatherDetail.setIcon(currentlyObj.getString("icon"));
                     weatherDetail.setTemperature((int) currentlyObj.getDouble("temperature"));
@@ -104,8 +106,19 @@ public class DetailWeatherActivity extends AppCompatActivity {
                     weatherDetail.setCloudCover(currentlyObj.getDouble("cloudCover"));
                     weatherDetail.setOzone(currentlyObj.getDouble("ozone"));
 
-                    setAdapter(weatherDetail);
+                    JSONArray photos = response.getJSONArray("photos");
 
+                    List<String> photosList = new ArrayList<>();
+
+                    if (photos != null) {
+                        for (int i = 0; i < photos.length(); i++) {
+                            photosList.add(photos.getString(i));
+                        }
+                    }
+
+                    weatherDetail.setPhotosUrlList(photosList);
+
+                    setAdapter(weatherDetail);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
