@@ -9,9 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Weather implements Serializable {
-    private String city;
-    private String state;
-    private String country;
     private String location;
     private double lat;
     private double lon;
@@ -24,30 +21,14 @@ public class Weather implements Serializable {
     private double pressure;
     List<DailyData> dailyDataList;
 
-    public Weather(String city, double lat, double lon) {
-        this.city = city;
+    public Weather(String location, double lat, double lon) {
+        this.location = location;
         this.lat = lat;
         this.lon = lon;
     }
 
     public Weather(String location) {
         this.location = location;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public String getFullLocation() {
-        return city + ", " + state + ", " + country;
     }
 
     public String getLocation() {
@@ -88,18 +69,6 @@ public class Weather implements Serializable {
 
     public double getPressure() {
         return pressure;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     public void setLocation(String location) {
@@ -165,9 +134,7 @@ public class Weather implements Serializable {
     @Override
     public String toString() {
         return "Weather{" +
-                "city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", country='" + country + '\'' +
+                "location='" + location + '\'' +
                 ", lat=" + lat +
                 ", lon=" + lon +
                 ", icon='" + icon + '\'' +

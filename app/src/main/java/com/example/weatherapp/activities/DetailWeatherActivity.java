@@ -41,13 +41,8 @@ public class DetailWeatherActivity extends AppCompatActivity {
         Intent intent = getIntent();
         double lat = intent.getDoubleExtra("LAT", 0);
         double lon = intent.getDoubleExtra("LON", 0);
-        String city = intent.getStringExtra("CITY");
-        String state = intent.getStringExtra("STATE");
-        String country = intent.getStringExtra("COUNTRY");
 
-        WeatherDetail weatherDetail = new WeatherDetail(city, lat, lon);
-        weatherDetail.setState(state);
-        weatherDetail.setCountry(country);
+        WeatherDetail weatherDetail = new WeatherDetail(intent.getStringExtra("LOCATION"), lat, lon);
 
         fetchWeatherDetailData(weatherDetail, lat, lon);
     }
@@ -81,7 +76,7 @@ public class DetailWeatherActivity extends AppCompatActivity {
 
     private void setUpActionBar() {
         Intent intent = getIntent();
-        setTitle(intent.getStringExtra("ACTION_BAR_TITLE"));
+        setTitle(intent.getStringExtra("LOCATION"));
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
@@ -89,7 +84,7 @@ public class DetailWeatherActivity extends AppCompatActivity {
     }
 
     public void fetchWeatherDetailData(final WeatherDetail weatherDetail, double lat, final double lon) {
-        NetworkUtils.fetchWeatherByCoordinate(lat, lon, weatherDetail.getFullLocation(), getApplicationContext(), new Callbacks.VolleyCallback() {
+        NetworkUtils.fetchWeatherByCoordinate(lat, lon, weatherDetail.getLocation(), getApplicationContext(), new Callbacks.VolleyCallback() {
             @Override
             public void onSuccess(JSONObject response) {
                 try {

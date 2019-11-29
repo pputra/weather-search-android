@@ -24,7 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
-    private ViewPager mViewPagerFavorite;
+    private ViewPager mViewPagerSummary;
     private ViewPagerSummaryAdapter mViewPagerSummaryAdapter;
     private LinearLayout mDotsSlider;
     private ImageView[] mImageViewDots;
@@ -34,10 +34,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mViewPagerFavorite = findViewById(R.id.view_pager_favorite);
+        mViewPagerSummary = findViewById(R.id.view_pager_favorite);
         mDotsSlider = findViewById(R.id.dots_slider);
         mViewPagerSummaryAdapter = new ViewPagerSummaryAdapter(getSupportFragmentManager());
-        mViewPagerFavorite.setAdapter(mViewPagerSummaryAdapter);
+        mViewPagerSummary.setAdapter(mViewPagerSummaryAdapter);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     private void setDotsSlider() {
         resetDotSlider();
 
-        mViewPagerFavorite.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mViewPagerSummary.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
 
@@ -121,11 +121,12 @@ public class MainActivity extends AppCompatActivity {
                     String city = response.getString("city");
                     String state = response.getString("region");
                     String country = response.getString("countryCode");
+
+                    String location = city + ", " + state + ", " + country;
+
                     double lat = response.getDouble("lat");
                     double lon = response.getDouble("lon");
-                    final Weather weather = new Weather(city, lat, lon);
-                    weather.setState(state);
-                    weather.setCountry(country);
+                    final Weather weather = new Weather(location, lat, lon);
                     fetchWeatherData(weather, lat, lon);
 
                 } catch (JSONException e) {
@@ -161,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                     mViewPagerSummaryAdapter.addFavCity(weather, 0);
 
                     //TODO: replace these data with actual favorites
-                    Weather weather1 = new Weather("Seattle", 10, 10);
+                    Weather weather1 = new Weather("Seattle, WA, US", 10, 10);
                     weather1.setIcon("rain");
                     weather1.setTemperature(45);
                     weather1.setSummary("raining");
@@ -170,9 +171,6 @@ public class MainActivity extends AppCompatActivity {
                     weather1.setVisibility(1);
                     weather1.setPressure(1000);
                     weather1.setDailyDataList(dailyDataList);
-                    weather1.setCountry("US");
-                    weather1.setState("WA");
-
 
                     mViewPagerSummaryAdapter.addFavCity(weather1);
                     mViewPagerSummaryAdapter.addFavCity(weather);
@@ -194,8 +192,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void removeFromFavoriteByIndex(int index) {
         mViewPagerSummaryAdapter.removeFavCity(index);
-        mViewPagerFavorite.setAdapter(mViewPagerSummaryAdapter);
-        mViewPagerFavorite.setCurrentItem(index - 1);
+        mViewPagerSummary.setAdapter(mViewPagerSummaryAdapter);
+        mViewPagerSummary.setCurrentItem(index - 1);
 
         resetDotSlider();
     }
@@ -221,6 +219,6 @@ public class MainActivity extends AppCompatActivity {
             mDotsSlider.addView(mImageViewDots[i], params);
         }
 
-        mImageViewDots[mViewPagerFavorite.getCurrentItem()].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot ));
+        mImageViewDots[mViewPagerSummary.getCurrentItem()].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot ));
     }
 }

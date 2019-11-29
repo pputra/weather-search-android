@@ -92,7 +92,7 @@ public class SummaryFragment extends Fragment {
     }
 
     private void setTopCard(final Weather weather) {
-        mTextViewWeatherLocation.setText(weather.getFullLocation());
+        mTextViewWeatherLocation.setText(weather.getLocation());
         mIconWeatherSummary.setIcon(mIconMap.get(weather.getIcon()));
 
         if (weather.getIcon().equals("clear-day")) mIconWeatherSummary.setColor(Color.YELLOW);
@@ -104,10 +104,7 @@ public class SummaryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intentThatShowsDetailWeatherActivity = new Intent(getContext(), DetailWeatherActivity.class);
-                intentThatShowsDetailWeatherActivity.putExtra("ACTION_BAR_TITLE", weather.getFullLocation());
-                intentThatShowsDetailWeatherActivity.putExtra("CITY", weather.getCity());
-                intentThatShowsDetailWeatherActivity.putExtra("STATE", weather.getState());
-                intentThatShowsDetailWeatherActivity.putExtra("COUNTRY", weather.getCountry());
+                intentThatShowsDetailWeatherActivity.putExtra("LOCATION", weather.getLocation());
                 intentThatShowsDetailWeatherActivity.putExtra("LAT", weather.getLat());
                 intentThatShowsDetailWeatherActivity.putExtra("LON", weather.getLon());
 
@@ -152,7 +149,7 @@ public class SummaryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast toast = Toast.makeText(getContext(),
-                        weather.getFullLocation() + " was removed from favorites",
+                        weather.getLocation() + " was removed from favorites",
                         Toast.LENGTH_SHORT);
 
                 toast.show();
