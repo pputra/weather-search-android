@@ -1,10 +1,9 @@
 package com.example.weatherapp.adapters;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.weatherapp.fragments.SummaryFragment;
 import com.example.weatherapp.models.Weather;
@@ -12,7 +11,7 @@ import com.example.weatherapp.models.Weather;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewPagerSummaryAdapter extends FragmentPagerAdapter {
+public class ViewPagerSummaryAdapter extends FragmentStatePagerAdapter {
     private List<Weather> mFavCityList = new ArrayList<>();
 
     public ViewPagerSummaryAdapter(FragmentManager fm) {
@@ -34,13 +33,6 @@ public class ViewPagerSummaryAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return mFavCityList.size();
-    }
-
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        position = position + 1;
-        return "Fragment " + position;
     }
 
     public void addFavCity(Weather weather) {

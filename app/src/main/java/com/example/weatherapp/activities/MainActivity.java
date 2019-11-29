@@ -1,6 +1,7 @@
 package com.example.weatherapp.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -23,11 +24,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPagerSummary;
     private ViewPagerSummaryAdapter mViewPagerSummaryAdapter;
     private LinearLayout mDotsSlider;
     private ImageView[] mImageViewDots;
+    private int numLoadedData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.LENGTH_SHORT);
 
         toast.show();
-
         showWeatherData();
     }
 
@@ -142,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void fetchWeatherData(final Weather weather, double lat, final double lon) {
+        numLoadedData = 0;
         NetworkUtils.fetchWeatherByCoordinate(lat, lon, getApplicationContext(), new Callbacks.VolleyCallback() {
             @Override
             public void onSuccess(JSONObject response) {
@@ -159,25 +165,9 @@ public class MainActivity extends AppCompatActivity {
                     weather.setPressure(currentlyObj.getDouble("pressure"));
                     weather.setDailyDataList(dailyDataList);
 
-                    mViewPagerSummaryAdapter.addFavCity(weather, 0);
-
-                    //TODO: replace these data with actual favorites
-                    Weather weather1 = new Weather("Seattle, WA, US", 10, 10);
-                    weather1.setIcon("rain");
-                    weather1.setTemperature(45);
-                    weather1.setSummary("raining");
-                    weather1.setHumidity(3);
-                    weather1.setWindSpeed(3);
-                    weather1.setVisibility(1);
-                    weather1.setPressure(1000);
-                    weather1.setDailyDataList(dailyDataList);
-
-                    mViewPagerSummaryAdapter.addFavCity(weather1);
                     mViewPagerSummaryAdapter.addFavCity(weather);
 
-                    // TODO: get favorite cities from SharedPreferences and fetch the weather data
-                    setDotsSlider();
-
+                    fetchWeatherDataFromFavoriteLocation();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -188,6 +178,72 @@ public class MainActivity extends AppCompatActivity {
                 error.printStackTrace();
             }
         });
+    }
+
+    private void fetchWeatherDataFromFavoriteLocation() {
+        SharedPreferences sharedPreferences = getSharedPreferences("PREF", 0);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        Set<String> stubFavSet = new HashSet<>();
+        stubFavSet.add("Mountain View, CA, US");
+        stubFavSet.add("Seattle, WA, US");
+        stubFavSet.add("New Orleans, LA, US");
+        stubFavSet.add("New York, New York, US");
+        stubFavSet.add("San Francisco, CA, US");
+
+        editor.putStringSet("FAVORITE", stubFavSet);
+        editor.commit();
+
+        final Set<String> favSet = sharedPreferences.getStringSet("FAVORITE", new HashSet<String>());
+
+        mViewPagerSummary.setOffscreenPageLimit(favSet.size() + 1);
+
+        if (favSet.isEmpty()) setDotsSlider();
+
+        Iterator<String> iterator = favSet.iterator();
+
+        while (iterator.hasNext()) {
+            final String favLocation = iterator.next();
+            NetworkUtils.fetchWeatherByFullLocation(favLocation, getApplicationContext(), new Callbacks.VolleyCallback() {
+                @Override
+                public void onSuccess(JSONObject response) {
+                    try {
+                        response = response.getJSONObject("weatherData");
+                        JSONObject currentlyObj = response.getJSONObject("currently");
+                        JSONArray dailyDataList = response.getJSONObject("daily").getJSONArray("data");
+
+                        Weather favLocationWeather = new Weather(favLocation);
+
+                        favLocationWeather.setLat(response.getDouble("latitude"));
+                        favLocationWeather.setLon(response.getDouble("longitude"));
+                        favLocationWeather.setIcon(currentlyObj.getString("icon"));
+                        favLocationWeather.setTemperature((int) currentlyObj.getDouble("temperature"));
+                        favLocationWeather.setSummary(currentlyObj.getString("summary"));
+                        favLocationWeather.setHumidity(currentlyObj.getDouble("humidity"));
+                        favLocationWeather.setWindSpeed(currentlyObj.getDouble("windSpeed"));
+                        favLocationWeather.setVisibility(currentlyObj.getDouble("visibility"));
+                        favLocationWeather.setPressure(currentlyObj.getDouble("pressure"));
+                        favLocationWeather.setDailyDataList(dailyDataList);
+
+                        mViewPagerSummaryAdapter.addFavCity(favLocationWeather);
+                        numLoadedData++;
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } finally {
+                        if (numLoadedData == favSet.size()) {
+                            // TODO: SET LOADING INDICATOR
+                            setDotsSlider();
+                        }
+                    }
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
+        }
     }
 
     public void removeFromFavoriteByIndex(int index) {
@@ -219,6 +275,8 @@ public class MainActivity extends AppCompatActivity {
             mDotsSlider.addView(mImageViewDots[i], params);
         }
 
-        mImageViewDots[mViewPagerSummary.getCurrentItem()].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot ));
+        if (mViewPagerSummary.getCurrentItem() < numDots) {
+            mImageViewDots[mViewPagerSummary.getCurrentItem()].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot ));
+        }
     }
 }
