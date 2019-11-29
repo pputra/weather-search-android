@@ -12,6 +12,7 @@ public class Weather implements Serializable {
     private String city;
     private String state;
     private String country;
+    private String location;
     private double lat;
     private double lon;
     private String icon;
@@ -29,6 +30,10 @@ public class Weather implements Serializable {
         this.lon = lon;
     }
 
+    public Weather(String location) {
+        this.location = location;
+    }
+
     public String getCity() {
         return city;
     }
@@ -43,6 +48,10 @@ public class Weather implements Serializable {
 
     public String getFullLocation() {
         return city + ", " + state + ", " + country;
+    }
+
+    public String getLocation() {
+        return location;
     }
 
     public double getLat() {
@@ -91,6 +100,10 @@ public class Weather implements Serializable {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public void setLat(double lat) {
