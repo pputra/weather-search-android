@@ -1,5 +1,7 @@
 package com.example.weatherapp.models;
 
+import android.support.annotation.Nullable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -185,6 +187,22 @@ public class Weather implements Serializable {
                     ", minTemperature=" + minTemperature +
                     ", maxTemperature=" + maxTemperature +
                     '}';
+        }
+
+        @Override
+        public int hashCode() {
+            return location.hashCode();
+        }
+
+        @Override
+        public boolean equals(@Nullable Object obj) {
+            if (obj == this) return true;
+
+            if (!(obj instanceof Weather)) return false;
+
+            Weather o = (Weather) obj;
+
+            return location.equals(o.location);
         }
     }
 }
