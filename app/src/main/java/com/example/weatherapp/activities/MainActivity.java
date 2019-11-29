@@ -4,8 +4,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.support.v7.widget.SearchView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -34,6 +37,39 @@ public class MainActivity extends AppCompatActivity {
         mDotsSlider = findViewById(R.id.dots_slider);
         mViewPagerSummaryAdapter = new ViewPagerSummaryAdapter(getSupportFragmentManager());
         mViewPagerFavorite.setAdapter(mViewPagerSummaryAdapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+
+        MenuItem searchMenu = menu.findItem(R.id.action_bar_search);
+
+        SearchView searchView = (SearchView) searchMenu.getActionView();
+
+        searchView.setBackgroundColor(getResources().getColor(R.color.colorSecondaryDark));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // TODO: OPEN SEARCH ACTIVITY
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        query,
+                        Toast.LENGTH_SHORT);
+
+                toast.show();
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // TODO : FETCH API AND AUTOCOMPLETE
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
