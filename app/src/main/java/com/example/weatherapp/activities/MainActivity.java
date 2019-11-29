@@ -1,5 +1,6 @@
 package com.example.weatherapp.activities;
 
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -52,12 +53,10 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // TODO: OPEN SEARCH ACTIVITY
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        query,
-                        Toast.LENGTH_SHORT);
+                Intent intentThatShowsSearchResultActivity = new Intent(getApplicationContext(), SearchResultActivity.class);
+                intentThatShowsSearchResultActivity.putExtra("SEARCH_KEYWORD", query);
 
-                toast.show();
+                startActivity(intentThatShowsSearchResultActivity);
 
                 return false;
             }
