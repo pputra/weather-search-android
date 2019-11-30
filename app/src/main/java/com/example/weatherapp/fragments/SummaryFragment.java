@@ -126,7 +126,8 @@ public class SummaryFragment extends Fragment {
     }
 
     private void setBotCard(final Weather weather) {
-        for (Weather.DailyData dailyData : weather.getDailyDataList()) {
+        for (int i = 0; i < weather.getDailyDataList().size(); i++) {
+            Weather.DailyData dailyData = weather.getDailyDataList().get(i);
             LayoutInflater dailyDataViewInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             LinearLayout dailyDataView = (LinearLayout) dailyDataViewInflater.inflate(R.layout.daily_data_layout, null);
 
@@ -142,6 +143,11 @@ public class SummaryFragment extends Fragment {
 
             TextView textViewDailyDataMaxTemperature = dailyDataView.findViewById(R.id.tv_daily_data_max_temperature);
             textViewDailyDataMaxTemperature.setText(Integer.toString(dailyData.getMaxTemperature()));
+
+            if (i == weather.getDailyDataList().size() - 1) {
+                LinearLayout linearLayoutBorder = dailyDataView.findViewById(R.id.layout_border_daily_data);
+                linearLayoutBorder.setVisibility(View.GONE);
+            }
 
             mLayoutDailyData.addView(dailyDataView);
         }

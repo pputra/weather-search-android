@@ -42,6 +42,8 @@
             android:textSize="28sp" />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/layout_border_daily_data"
+        android:orientation="vertical"
         android:background="@color/lightGrey"
         android:layout_width="match_parent"
         android:layout_height="1dp" />
