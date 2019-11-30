@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.support.v7.widget.SearchView;
@@ -32,6 +33,7 @@ import java.util.Set;
 public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPagerSummary;
     private ViewPagerSummaryAdapter mViewPagerSummaryAdapter;
+    private LinearLayout mProgressBar;
     private LinearLayout mDotsSlider;
     private ImageView[] mImageViewDots;
     private int numLoadedData;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mViewPagerSummary = findViewById(R.id.view_pager_favorite);
+        mProgressBar = findViewById(R.id.pb_main_activity);
         mDotsSlider = findViewById(R.id.dots_slider);
         mViewPagerSummaryAdapter = new ViewPagerSummaryAdapter(getSupportFragmentManager());
         mViewPagerSummary.setAdapter(mViewPagerSummaryAdapter);
@@ -149,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void fetchWeatherData(final Weather weather, double lat, final double lon) {
         numLoadedData = 0;
+        toggleProgressBar(true);
         NetworkUtils.fetchWeatherByCoordinate(lat, lon, getApplicationContext(), new Callbacks.VolleyCallback() {
             @Override
             public void onSuccess(JSONObject response) {
@@ -189,7 +193,10 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPagerSummary.setOffscreenPageLimit(favSet.size() + 1);
 
-        if (favSet.isEmpty()) setDotsSlider();
+        if (favSet.isEmpty()) {
+            toggleProgressBar(false);
+            setDotsSlider();
+        }
 
         Iterator<String> iterator = favSet.iterator();
 
@@ -222,8 +229,6 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     } finally {
                         if (numLoadedData == favSet.size()) {
-                            // TODO: SET LOADING INDICATOR
-
                             boolean resetAdapter = sharedPreferences.getBoolean("RESET_ADAPTER", false);
 
                             if (resetAdapter) {
@@ -233,6 +238,7 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                             setDotsSlider();
+                            toggleProgressBar(false);
                         }
                     }
                 }
@@ -276,6 +282,18 @@ public class MainActivity extends AppCompatActivity {
 
         if (mViewPagerSummary.getCurrentItem() < numDots) {
             mImageViewDots[mViewPagerSummary.getCurrentItem()].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot ));
+        }
+    }
+
+    private void toggleProgressBar(boolean show) {
+        if (show) {
+            mProgressBar.setVisibility(View.VISIBLE);
+            mViewPagerSummary.setVisibility(View.INVISIBLE);
+            mDotsSlider.setVisibility(View.INVISIBLE);
+        } else {
+            mProgressBar.setVisibility(View.INVISIBLE);
+            mViewPagerSummary.setVisibility(View.VISIBLE);
+            mDotsSlider.setVisibility(View.VISIBLE);
         }
     }
 }

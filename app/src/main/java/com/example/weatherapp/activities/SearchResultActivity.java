@@ -6,6 +6,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.android.volley.VolleyError;
 import com.example.weatherapp.R;
@@ -20,6 +22,7 @@ import org.json.JSONObject;
 
 public class SearchResultActivity extends AppCompatActivity {
     ViewPager mViewPagerSearchResult;
+    LinearLayout mProgressBar;
     ViewPagerSearchResultAdapter mViewPagerSearchResultAdapter;
 
     @Override
@@ -28,6 +31,7 @@ public class SearchResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_result);
 
         mViewPagerSearchResult = findViewById(R.id.view_pager_search_result);
+        mProgressBar = findViewById(R.id.pb_search_result_activity);
 
         Intent intent = getIntent();
         String location = intent.getStringExtra("SEARCH_KEYWORD");
@@ -81,6 +85,7 @@ public class SearchResultActivity extends AppCompatActivity {
                     mViewPagerSearchResultAdapter.setWeather(weather);
 
                     mViewPagerSearchResult.setAdapter(mViewPagerSearchResultAdapter);
+                    toggleProgressBar(false);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -91,5 +96,15 @@ public class SearchResultActivity extends AppCompatActivity {
                 error.printStackTrace();
             }
         });
+    }
+
+    private void toggleProgressBar(boolean show) {
+        if (show) {
+            mProgressBar.setVisibility(View.VISIBLE);
+            mViewPagerSearchResult.setVisibility(View.INVISIBLE);
+        } else {
+            mProgressBar.setVisibility(View.INVISIBLE);
+            mViewPagerSearchResult.setVisibility(View.VISIBLE);
+        }
     }
 }

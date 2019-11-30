@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.android.volley.VolleyError;
 import com.example.weatherapp.R;
@@ -25,16 +27,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DetailWeatherActivity extends AppCompatActivity {
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+    private TabLayout mTabLayout;
+    private ViewPager mViewPagerDetail;
+    private LinearLayout mProgressBar;
     private ViewPagerDetailAdapter viewPagerDetailAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_detail_weather);
-        tabLayout = findViewById(R.id.tablayout_detail_tabs);
-        viewPager = findViewById(R.id.pager);
+        mTabLayout = findViewById(R.id.tablayout_detail_tabs);
+        mViewPagerDetail = findViewById(R.id.view_pager_detail);
+        mProgressBar = findViewById(R.id.pb_detail_weather_activity);
 
         setUpActionBar();
 
@@ -111,6 +116,8 @@ public class DetailWeatherActivity extends AppCompatActivity {
                     weatherDetail.setPhotosUrlList(photosList);
 
                     setAdapter(weatherDetail);
+
+                    toggleProgressBar(false);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -125,8 +132,8 @@ public class DetailWeatherActivity extends AppCompatActivity {
 
     public void setAdapter(WeatherDetail weatherDetail) {
         viewPagerDetailAdapter = new ViewPagerDetailAdapter(getSupportFragmentManager(), weatherDetail);
-        viewPager.setAdapter(viewPagerDetailAdapter);
-        tabLayout.setupWithViewPager(viewPager);
+        mViewPagerDetail.setAdapter(viewPagerDetailAdapter);
+        mTabLayout.setupWithViewPager(mViewPagerDetail);
     }
 
     private void tweet(String location, int temperature) {
@@ -139,5 +146,17 @@ public class DetailWeatherActivity extends AppCompatActivity {
         httpIntent.setData(uri.build());
 
         startActivity(httpIntent);
+    }
+
+    private void toggleProgressBar(boolean show) {
+        if (show) {
+            mProgressBar.setVisibility(View.VISIBLE);
+            mViewPagerDetail.setVisibility(View.INVISIBLE);
+            mTabLayout.setVisibility(View.INVISIBLE);
+        } else {
+            mProgressBar.setVisibility(View.GONE);
+            mViewPagerDetail.setVisibility(View.VISIBLE);
+            mTabLayout.setVisibility(View.VISIBLE);
+        }
     }
 }

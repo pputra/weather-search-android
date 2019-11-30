@@ -42,7 +42,6 @@ public class NetworkUtils {
         Uri.Builder uri = Uri.parse(DEFAULT_HOST).buildUpon().appendPath("weather");
         uri.appendQueryParameter("lat", Double.toString(lat));
         uri.appendQueryParameter("lon", Double.toString(lon));
-        uri.appendQueryParameter("mobile", "true");
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, uri.toString(), null,
                 new Response.Listener<JSONObject>() {
@@ -66,7 +65,6 @@ public class NetworkUtils {
         uri.appendQueryParameter("lat", Double.toString(lat));
         uri.appendQueryParameter("lon", Double.toString(lon));
         uri.appendQueryParameter("photos_keyword", photosKeyWord);
-        uri.appendQueryParameter("mobile", "true");
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, uri.toString(), null,
                 new Response.Listener<JSONObject>() {
