@@ -17,6 +17,7 @@
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/rounded_border"
+        android:foreground="@drawable/ripple_effect"
         app:layout_constraintBottom_toTopOf="@+id/fav_mid_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
