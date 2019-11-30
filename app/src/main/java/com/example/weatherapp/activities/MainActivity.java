@@ -10,10 +10,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.support.v7.widget.SearchView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.example.weatherapp.R;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         MenuItem searchMenu = menu.findItem(R.id.action_bar_search);
 
-        SearchView searchView = (SearchView) searchMenu.getActionView();
+        final SearchView searchView = (SearchView) searchMenu.getActionView();
 
         searchView.setBackgroundColor(getResources().getColor(R.color.colorSecondaryDark));
 
@@ -73,7 +74,30 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // TODO : FETCH API AND AUTOCOMPLETE
+                NetworkUtils.fetchLocationAutoCompleteSuggestion(newText, getApplicationContext(), new Callbacks.VolleyCallback() {
+                    @Override
+                    public void onSuccess(JSONObject response) {
+                        try {
+                            JSONArray jsonArraySuggestions = response.getJSONArray("places");
+
+                            String[] suggestions = new String[jsonArraySuggestions.length()];
+
+                            for (int i = 0; i < jsonArraySuggestions.length(); i++) {
+                                suggestions[i] = jsonArraySuggestions.getString(i);
+                            }
+
+                            setAutoComplete(searchView, suggestions);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(VolleyError error) {
+
+                    }
+                });
+
                 return false;
             }
         });
@@ -289,5 +313,23 @@ public class MainActivity extends AppCompatActivity {
             mViewPagerSummary.setVisibility(View.VISIBLE);
             mDotsSlider.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void setAutoComplete(SearchView searchView, String[] suggestions) {
+        final SearchView.SearchAutoComplete searchAutoComplete = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+
+        searchAutoComplete.setDropDownBackgroundResource(android.R.color.white);
+
+        ArrayAdapter<String> newsAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, suggestions);
+
+        searchAutoComplete.setAdapter(newsAdapter);
+
+        searchAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int itemIndex, long id) {
+                String queryString=(String)adapterView.getItemAtPosition(itemIndex);
+                searchAutoComplete.setText("" + queryString);
+            }
+        });
     }
 }

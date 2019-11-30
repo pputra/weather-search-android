@@ -103,4 +103,25 @@ public class NetworkUtils {
 
         queue.add(request);
     }
+
+    public static void fetchLocationAutoCompleteSuggestion(String keyword, Context context, final Callbacks.VolleyCallback callback) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        Uri.Builder uri = Uri.parse(DEFAULT_HOST).buildUpon().appendPath("places");
+        uri.appendQueryParameter("input", keyword);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, uri.toString(), null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        callback.onSuccess(response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onError(error);
+            }
+        });
+
+        queue.add(request);
+    }
 }
