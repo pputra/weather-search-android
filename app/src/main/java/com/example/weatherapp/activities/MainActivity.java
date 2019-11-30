@@ -2,6 +2,7 @@ package com.example.weatherapp.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -181,21 +182,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fetchWeatherDataFromFavoriteLocation() {
-        SharedPreferences sharedPreferences = getSharedPreferences("PREF", 0);
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        Set<String> stubFavSet = new HashSet<>();
-        stubFavSet.add("Mountain View, CA, US");
-        stubFavSet.add("Seattle, WA, US");
-        stubFavSet.add("New Orleans, LA, US");
-        stubFavSet.add("New York, New York, US");
-        stubFavSet.add("San Francisco, CA, US");
-
-        editor.putStringSet("FAVORITE", stubFavSet);
-        editor.commit();
-
-        final Set<String> favSet = sharedPreferences.getStringSet("FAVORITE", new HashSet<String>());
+        final Set<String> favSet = new HashSet<>(sharedPreferences.getStringSet("FAVORITE", new HashSet<String>()));
 
         mViewPagerSummary.setOffscreenPageLimit(favSet.size() + 1);
 
@@ -233,6 +223,15 @@ public class MainActivity extends AppCompatActivity {
                     } finally {
                         if (numLoadedData == favSet.size()) {
                             // TODO: SET LOADING INDICATOR
+
+                            boolean resetAdapter = sharedPreferences.getBoolean("RESET_ADAPTER", false);
+
+                            if (resetAdapter) {
+                                mViewPagerSummary.setAdapter(mViewPagerSummaryAdapter);
+                                editor.remove("RESET_ADAPTER");
+                                editor.commit();
+                            }
+
                             setDotsSlider();
                         }
                     }

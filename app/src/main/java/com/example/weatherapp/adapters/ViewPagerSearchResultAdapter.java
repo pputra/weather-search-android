@@ -18,7 +18,7 @@ public class ViewPagerSearchResultAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Bundle bundle = new Bundle();
-        bundle.putInt("ADAPTER_INDEX", position);
+        bundle.putInt("ADAPTER_INDEX", -1);
         bundle.putSerializable("WEATHER", mWeather);
         SummaryFragment summaryFragment = new SummaryFragment();
 

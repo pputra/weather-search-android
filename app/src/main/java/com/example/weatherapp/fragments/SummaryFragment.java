@@ -2,11 +2,14 @@ package com.example.weatherapp.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +26,9 @@ import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 import net.steamcrafted.materialiconlib.MaterialIconView;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -143,7 +148,65 @@ public class SummaryFragment extends Fragment {
     }
 
     private void setFavButton(final int i, final Weather weather) {
-        if (i == 0) return;
+        boolean isCurrLocation = i == 0;
+
+        if (isCurrLocation) return;
+
+        mFloatingActionButtonFavorite.show();
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        final Set<String> favSet = new HashSet<>(sharedPreferences.getStringSet("FAVORITE", new HashSet<String>()));
+
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        if (favSet.contains(weather.getLocation())) {
+            mFloatingActionButtonFavorite.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_map_marker_minus));
+        } else {
+            mFloatingActionButtonFavorite.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_map_marker_plus));
+        }
+
+        boolean setFavButtonForSearchActivity = i == -1;
+
+        if (setFavButtonForSearchActivity) {
+            editor.putBoolean("RESET_ADAPTER", true);
+            editor.commit();
+
+            mFloatingActionButtonFavorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if (favSet.contains(weather.getLocation())) {
+                        favSet.remove(weather.getLocation());
+                        editor.putStringSet("FAVORITE", favSet);
+                        editor.commit();
+
+                        mFloatingActionButtonFavorite.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_map_marker_plus));
+
+                        Toast toast = Toast.makeText(getContext(),
+                                weather.getLocation() + " was removed from favorites",
+                                Toast.LENGTH_SHORT);
+
+                        toast.show();
+                    } else {
+                        favSet.add(weather.getLocation());
+                        editor.putStringSet("FAVORITE", favSet);
+                        editor.commit();
+
+                        mFloatingActionButtonFavorite.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_map_marker_minus));
+
+                        Toast toast = Toast.makeText(getContext(),
+                                weather.getLocation() + " was added from favorites",
+                                Toast.LENGTH_SHORT);
+
+                        toast.show();
+                    }
+                }
+            });
+
+            return;
+        }
+
         mFloatingActionButtonFavorite.show();
         mFloatingActionButtonFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,6 +218,9 @@ public class SummaryFragment extends Fragment {
                 toast.show();
 
                 MainActivity activity = (MainActivity) getActivity();
+                favSet.remove(weather.getLocation());
+                editor.putStringSet("FAVORITE", favSet);
+                editor.commit();
                 activity.removeFromFavoriteByIndex(i);
             }
         });
