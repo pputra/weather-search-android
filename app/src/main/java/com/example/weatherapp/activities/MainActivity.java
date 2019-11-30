@@ -85,12 +85,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // TODO: replace toast with a progressbar
-        Toast toast = Toast.makeText(getApplicationContext(),
-                "fetching weather data....",
-                Toast.LENGTH_SHORT);
-
-        toast.show();
         showWeatherData();
     }
 
