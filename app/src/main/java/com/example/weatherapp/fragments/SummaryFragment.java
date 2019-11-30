@@ -108,12 +108,12 @@ public class SummaryFragment extends Fragment {
         mLayoutTopCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentThatShowsDetailWeatherActivity = new Intent(getContext(), DetailWeatherActivity.class);
-                intentThatShowsDetailWeatherActivity.putExtra("LOCATION", weather.getLocation());
-                intentThatShowsDetailWeatherActivity.putExtra("LAT", weather.getLat());
-                intentThatShowsDetailWeatherActivity.putExtra("LON", weather.getLon());
+                String location = weather.getLocation();
+                int temperature = weather.getTemperature();
+                double lat = weather.getLat();
+                double lon = weather.getLon();
 
-                startActivity(intentThatShowsDetailWeatherActivity);
+                goToDetailActivity(location, temperature, lat, lon);
             }
         });
     }
@@ -226,4 +226,13 @@ public class SummaryFragment extends Fragment {
         });
     }
 
+    private void goToDetailActivity(String location, int temperature, double lat, double lon) {
+        Intent intentThatShowsDetailWeatherActivity = new Intent(getContext(), DetailWeatherActivity.class);
+        intentThatShowsDetailWeatherActivity.putExtra("LOCATION", location);
+        intentThatShowsDetailWeatherActivity.putExtra("TEMPERATURE", temperature);
+        intentThatShowsDetailWeatherActivity.putExtra("LAT", lat);
+        intentThatShowsDetailWeatherActivity.putExtra("LON", lon);
+
+        startActivity(intentThatShowsDetailWeatherActivity);
+    }
 }

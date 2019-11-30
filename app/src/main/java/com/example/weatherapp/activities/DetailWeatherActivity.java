@@ -1,6 +1,7 @@
 package com.example.weatherapp.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -8,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.example.weatherapp.R;
@@ -61,13 +61,10 @@ public class DetailWeatherActivity extends AppCompatActivity {
                 this.finish();
                 return true;
             case R.id.action_bar_tweet:
-                // TODO: add tweet function
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "tweet",
-                        Toast.LENGTH_SHORT);
+                String location = getIntent().getStringExtra("LOCATION");
+                int temperature = getIntent().getIntExtra("TEMPERATURE", 60);
 
-                toast.show();
-
+                tweet(location, temperature);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -130,5 +127,17 @@ public class DetailWeatherActivity extends AppCompatActivity {
         viewPagerDetailAdapter = new ViewPagerDetailAdapter(getSupportFragmentManager(), weatherDetail);
         viewPager.setAdapter(viewPagerDetailAdapter);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void tweet(String location, int temperature) {
+        Intent httpIntent = new Intent(Intent.ACTION_VIEW);
+
+        String tweetContent = "Checkout " + location + "'s Weather! It is " + temperature + "°F!\n#CSCI571WeatherSearch";
+        Uri.Builder uri = Uri.parse("https://twitter.com").buildUpon().appendPath("intent").appendPath("tweet");
+        uri.appendQueryParameter("text", tweetContent);
+
+        httpIntent.setData(uri.build());
+
+        startActivity(httpIntent);
     }
 }
