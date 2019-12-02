@@ -178,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
                     response = response.getJSONObject("weatherData");
                     JSONObject currentlyObj = response.getJSONObject("currently");
                     JSONArray dailyDataList = response.getJSONObject("daily").getJSONArray("data");
+                    long offset = response.getLong("offset");
 
                     weather.setIcon(currentlyObj.getString("icon"));
                     weather.setTemperature((int) currentlyObj.getDouble("temperature"));
@@ -186,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                     weather.setWindSpeed(currentlyObj.getDouble("windSpeed"));
                     weather.setVisibility(currentlyObj.getDouble("visibility"));
                     weather.setPressure(currentlyObj.getDouble("pressure"));
-                    weather.setDailyDataList(dailyDataList);
+                    weather.setDailyDataList(dailyDataList, offset);
 
                     mViewPagerSummaryAdapter.addFavCity(weather);
 
@@ -227,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
                         response = response.getJSONObject("weatherData");
                         JSONObject currentlyObj = response.getJSONObject("currently");
                         JSONArray dailyDataList = response.getJSONObject("daily").getJSONArray("data");
+                        Long offset = response.getLong("offset");
 
                         Weather favLocationWeather = new Weather(favLocation);
 
@@ -239,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
                         favLocationWeather.setWindSpeed(currentlyObj.getDouble("windSpeed"));
                         favLocationWeather.setVisibility(currentlyObj.getDouble("visibility"));
                         favLocationWeather.setPressure(currentlyObj.getDouble("pressure"));
-                        favLocationWeather.setDailyDataList(dailyDataList);
+                        favLocationWeather.setDailyDataList(dailyDataList, offset);
 
                         mViewPagerSummaryAdapter.addFavCity(favLocationWeather);
                         numLoadedData++;

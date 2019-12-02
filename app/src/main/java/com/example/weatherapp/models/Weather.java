@@ -7,7 +7,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Weather implements Serializable {
@@ -113,7 +115,7 @@ public class Weather implements Serializable {
         this.pressure = pressure;
     }
 
-    public void setDailyDataList(JSONArray dailyDatalist) throws JSONException {
+    public void setDailyDataList(JSONArray dailyDatalist, long offset) throws JSONException {
         this.dailyDataList = new ArrayList<>();
 
 
@@ -125,7 +127,7 @@ public class Weather implements Serializable {
             int minTemperature = (int) Math.round(dailyData.getDouble("temperatureLow"));
             int maxTemperature = (int) Math.round(dailyData.getDouble("temperatureHigh"));
 
-            this.dailyDataList.add(new DailyData(time, icon, minTemperature, maxTemperature));
+            this.dailyDataList.add(new DailyData(time, offset, icon, minTemperature, maxTemperature));
         }
     }
 
@@ -151,20 +153,25 @@ public class Weather implements Serializable {
     }
 
     public class DailyData implements Serializable {
-        private int time;
+        private long time;
+        private long offset;
         private String icon;
         private int minTemperature;
         private int maxTemperature;
 
-        public DailyData(int time, String icon, int minTemperature, int maxTemperature) {
+        public DailyData(long time, long offset, String icon, int minTemperature, int maxTemperature) {
             this.time = time;
+            this.offset = offset;
             this.icon = icon;
             this.minTemperature = minTemperature;
             this.maxTemperature = maxTemperature;
         }
 
-        public int getTime() {
-            return time;
+        public String getTimeInDateFormat() {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/YYYY");
+            Date date = new Date(time * 1000);
+
+            return simpleDateFormat.format(date);
         }
 
         public String getIcon() {

@@ -67,6 +67,7 @@ public class SearchResultActivity extends AppCompatActivity {
                     response = response.getJSONObject("weatherData");
                     JSONObject currentlyObj = response.getJSONObject("currently");
                     JSONArray dailyDataList = response.getJSONObject("daily").getJSONArray("data");
+                    long offset = response.getLong("offset");
 
                     Weather weather = new Weather(location);
 
@@ -79,7 +80,7 @@ public class SearchResultActivity extends AppCompatActivity {
                     weather.setWindSpeed(currentlyObj.getDouble("windSpeed"));
                     weather.setVisibility(currentlyObj.getDouble("visibility"));
                     weather.setPressure(currentlyObj.getDouble("pressure"));
-                    weather.setDailyDataList(dailyDataList);
+                    weather.setDailyDataList(dailyDataList, offset);
 
                     mViewPagerSearchResultAdapter = new ViewPagerSearchResultAdapter(getSupportFragmentManager());
                     mViewPagerSearchResultAdapter.setWeather(weather);

@@ -132,7 +132,7 @@ public class SummaryFragment extends Fragment {
             LinearLayout dailyDataView = (LinearLayout) dailyDataViewInflater.inflate(R.layout.daily_data_layout, null);
 
             TextView textViewDailyDataDate = dailyDataView.findViewById(R.id.tv_daily_data_date);
-            textViewDailyDataDate.setText(Integer.toString(dailyData.getTime()));
+            textViewDailyDataDate.setText((dailyData.getTimeInDateFormat()));
 
             MaterialIconView materialIconViewDailyDataIcon = dailyDataView.findViewById(R.id.ic_daily_data);
             materialIconViewDailyDataIcon.setIcon(mIconMap.get(dailyData.getIcon()));
