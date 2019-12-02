@@ -91,6 +91,7 @@ public class DetailWeatherActivity extends AppCompatActivity {
             public void onSuccess(JSONObject response) {
                 try {
                     JSONObject currentlyObj = response.getJSONObject("weatherData").getJSONObject("currently");
+                    JSONArray dailyDataList = response.getJSONObject("weatherData").getJSONObject("daily").getJSONArray("data");
 
                     weatherDetail.setIcon(currentlyObj.getString("icon"));
                     weatherDetail.setTemperature((int) currentlyObj.getDouble("temperature"));
@@ -102,6 +103,7 @@ public class DetailWeatherActivity extends AppCompatActivity {
                     weatherDetail.setPrecipitation(currentlyObj.getDouble("precipIntensity"));
                     weatherDetail.setCloudCover(currentlyObj.getDouble("cloudCover"));
                     weatherDetail.setOzone(currentlyObj.getDouble("ozone"));
+                    weatherDetail.setDailyTemperatures(dailyDataList);
 
                     JSONArray photos = response.getJSONArray("photos");
 
