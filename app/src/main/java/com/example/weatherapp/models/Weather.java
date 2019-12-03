@@ -2,6 +2,8 @@ package com.example.weatherapp.models;
 
 import android.support.annotation.Nullable;
 
+import com.example.weatherapp.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,7 +12,9 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Weather implements Serializable {
     private String location;
@@ -150,6 +154,23 @@ public class Weather implements Serializable {
                 ", pressure=" + pressure +
                 ", dailyDataList=" + dailyDataList +
                 '}';
+    }
+
+    public static Map<String, Integer> getIconMap() {
+        Map<String, Integer> iconMap = new HashMap<>();
+
+        iconMap.put("clear-day", R.drawable.ic_weather_sunny);
+        iconMap.put("clear-night", R.drawable.ic_weather_night);
+        iconMap.put("rain", R.drawable.ic_weather_rainy);
+        iconMap.put("sleet", R.drawable.ic_weather_snowy_rainy);
+        iconMap.put("snow", R.drawable.ic_weather_snowy);
+        iconMap.put("wind", R.drawable.ic_weather_windy_variant);
+        iconMap.put("fog", R.drawable.ic_weather_fog);
+        iconMap.put("cloudy", R.drawable.ic_weather_cloudy);
+        iconMap.put("partly-cloudy-night", R.drawable.ic_weather_night_partly_cloudy);
+        iconMap.put("partly-cloudy-day", R.drawable.ic_weather_partly_cloudy);
+
+        return iconMap;
     }
 
     public class DailyData implements Serializable {

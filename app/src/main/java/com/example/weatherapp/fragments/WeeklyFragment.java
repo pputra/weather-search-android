@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.weatherapp.R;
+import com.example.weatherapp.models.Weather;
 import com.example.weatherapp.models.WeatherDetail;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -21,6 +22,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +31,7 @@ public class WeeklyFragment extends Fragment {
     private ImageView mImageViewSummary;
     private TextView mTextViewSummary;
     private LineChart mWeeklyChart;
+    private Map<String, Integer> mIconMap = Weather.getIconMap();
 
 
     public WeeklyFragment() {
@@ -42,13 +45,13 @@ public class WeeklyFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_weekly, container, false);
 
-        // TODO: CHANGE ICON DYNAMICALLY
         mImageViewSummary = view.findViewById(R.id.ic_weekly);
         mTextViewSummary = view.findViewById(R.id.tv_weekly_summary);
         mWeeklyChart = view.findViewById(R.id.chart_weekly);
 
         WeatherDetail weatherDetail = (WeatherDetail) getArguments().getSerializable("WEATHER_DETAIL");
 
+        mImageViewSummary.setImageResource(mIconMap.get(weatherDetail.getIcon()));
         mTextViewSummary.setText(weatherDetail.getSummary());
 
         setChartData(weatherDetail);

@@ -3,7 +3,6 @@ package com.example.weatherapp.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
@@ -13,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,10 +23,6 @@ import com.example.weatherapp.activities.MainActivity;
 import com.example.weatherapp.models.Weather;
 import com.example.weatherapp.utils.NumberParser;
 
-import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
-import net.steamcrafted.materialiconlib.MaterialIconView;
-
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -37,7 +33,7 @@ import java.util.Set;
  */
 public class SummaryFragment extends Fragment {
     TextView mTextViewWeatherLocation;
-    MaterialIconView mIconWeatherSummary;
+    ImageView mIconWeatherSummary;
     TextView mTextViewWeatherTemperature;
     TextView mTextViewWeatherSummary;
     TextView mTextViewHumidity;
@@ -48,7 +44,8 @@ public class SummaryFragment extends Fragment {
     LinearLayout mLayoutDailyData;
     FloatingActionButton mFloatingActionButtonFavorite;
 
-    Map<String, MaterialDrawableBuilder.IconValue> mIconMap = new HashMap<>();
+    Map<String, Integer> mIconMap = Weather.getIconMap();
+
 
     public SummaryFragment() {
     }
@@ -84,25 +81,11 @@ public class SummaryFragment extends Fragment {
         mTextViewPressure = view.findViewById(R.id.tv_pressure);
         mLayoutDailyData = view.findViewById(R.id.layout_daily_data);
         mFloatingActionButtonFavorite = view.findViewById(R.id.fab_favorite);
-
-        mIconMap.put("clear-day", MaterialDrawableBuilder.IconValue.WEATHER_SUNNY);
-        mIconMap.put("clear-night", MaterialDrawableBuilder.IconValue.WEATHER_NIGHT);
-        mIconMap.put("rain", MaterialDrawableBuilder.IconValue.WEATHER_RAINY);
-        mIconMap.put("sleet", MaterialDrawableBuilder.IconValue.WEATHER_SNOWY_RAINY);
-        mIconMap.put("snow", MaterialDrawableBuilder.IconValue.WEATHER_SNOWY);
-        mIconMap.put("wind", MaterialDrawableBuilder.IconValue.WEATHER_WINDY_VARIANT);
-        mIconMap.put("fog", MaterialDrawableBuilder.IconValue.WEATHER_FOG);
-        mIconMap.put("cloudy", MaterialDrawableBuilder.IconValue.WEATHER_CLOUDY);
-        mIconMap.put("partly-cloudy-night", MaterialDrawableBuilder.IconValue.WEATHER_PARTLYCLOUDY);
-        mIconMap.put("partly-cloudy-day", MaterialDrawableBuilder.IconValue.WEATHER_PARTLYCLOUDY);
     }
 
     private void setTopCard(final Weather weather) {
         mTextViewWeatherLocation.setText(weather.getLocation());
-        mIconWeatherSummary.setIcon(mIconMap.get(weather.getIcon()));
-
-        if (weather.getIcon().equals("clear-day")) mIconWeatherSummary.setColor(Color.YELLOW);
-
+        mIconWeatherSummary.setImageResource(mIconMap.get(weather.getIcon()));
         mTextViewWeatherTemperature.setText(weather.getTemperature() + "°F");
         mTextViewWeatherSummary.setText(weather.getSummary());
 
@@ -135,9 +118,8 @@ public class SummaryFragment extends Fragment {
             TextView textViewDailyDataDate = dailyDataView.findViewById(R.id.tv_daily_data_date);
             textViewDailyDataDate.setText((dailyData.getTimeInDateFormat()));
 
-            MaterialIconView materialIconViewDailyDataIcon = dailyDataView.findViewById(R.id.ic_daily_data);
-            materialIconViewDailyDataIcon.setIcon(mIconMap.get(dailyData.getIcon()));
-            if (dailyData.getIcon().equals("clear-day")) materialIconViewDailyDataIcon.setColor(Color.YELLOW);
+            ImageView imageViewDailyDataIcon = dailyDataView.findViewById(R.id.ic_daily_data);
+            imageViewDailyDataIcon.setImageResource(mIconMap.get(dailyData.getIcon()));
 
             TextView textViewDailyDataMinTemperature = dailyDataView.findViewById(R.id.tv_daily_data_min_temperature);
             textViewDailyDataMinTemperature.setText(Integer.toString(dailyData.getMinTemperature()));

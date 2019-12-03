@@ -6,13 +6,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.weatherapp.R;
+import com.example.weatherapp.models.Weather;
 import com.example.weatherapp.models.WeatherDetail;
 import com.example.weatherapp.utils.NumberParser;
 
-import net.steamcrafted.materialiconlib.MaterialIconView;
+import java.util.Map;
 
 
 /**
@@ -23,12 +25,13 @@ public class TodayFragment extends Fragment {
     TextView mTextViewTodayPressure;
     TextView mTextViewTodayPrecipitation;
     TextView mTextViewTodayTemperature;
-    MaterialIconView mIconTodaySummary;
+    ImageView mImageViewTodaySummary;
     TextView mTextViewTodaySummary;
     TextView mTextViewTodayHumidity;
     TextView mTextViewTodayVisibility;
     TextView mTextViewTodayCloudCover;
     TextView mTextViewTodayOzone;
+    Map<String, Integer> mIconMap = Weather.getIconMap();
 
 
     public TodayFragment() {
@@ -57,7 +60,7 @@ public class TodayFragment extends Fragment {
         mTextViewTodayPressure = view.findViewById(R.id.tv_today_pressure);
         mTextViewTodayPrecipitation = view.findViewById(R.id.tv_today_precipitation);
         mTextViewTodayTemperature = view.findViewById(R.id.tv_today_temperature);
-        mIconTodaySummary = view.findViewById(R.id.ic_today_summary);
+        mImageViewTodaySummary = view.findViewById(R.id.ic_today_summary);
         mTextViewTodaySummary = view.findViewById(R.id.tv_today_summary);
         mTextViewTodayHumidity = view.findViewById(R.id.tv_today_humidity);
         mTextViewTodayVisibility = view.findViewById(R.id.tv_today_visibility);
@@ -71,6 +74,7 @@ public class TodayFragment extends Fragment {
         mTextViewTodayPrecipitation.setText(NumberParser.convertNumberToTwoDecimalPLacesString(weatherDetail.getPrecipitation()) + " mmph");
         mTextViewTodayTemperature.setText(weatherDetail.getTemperature() + "°F");
 
+        mImageViewTodaySummary.setImageResource(mIconMap.get(weatherDetail.getIcon()));
         mTextViewTodaySummary.setText(weatherDetail.getSummary());
         mTextViewTodayHumidity.setText(Integer.toString(NumberParser.convertDecimalToPercentage(weatherDetail.getHumidity())) + "%");
 
