@@ -76,9 +76,7 @@ public class WeeklyFragment extends Fragment {
         LineDataSet maxTemperaturesDataSet = new LineDataSet(maxTemperatureEntries,"Maximum Temperatures");
 
         minTemperaturesDataSet.setColor(ContextCompat.getColor(getContext(), R.color.darkPurple));
-        minTemperaturesDataSet.setValueTextColor(Color.WHITE);
         maxTemperaturesDataSet.setColor(ContextCompat.getColor(getContext(), R.color.lightOrange));
-        maxTemperaturesDataSet.setValueTextColor(Color.WHITE);
 
         LineData lineData = new LineData();
         lineData.addDataSet(minTemperaturesDataSet);
