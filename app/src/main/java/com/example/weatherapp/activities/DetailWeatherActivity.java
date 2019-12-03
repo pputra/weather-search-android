@@ -1,6 +1,7 @@
 package com.example.weatherapp.activities;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -118,7 +119,6 @@ public class DetailWeatherActivity extends AppCompatActivity {
                     weatherDetail.setPhotosUrlList(photosList);
 
                     setAdapter(weatherDetail);
-
                     toggleProgressBar(false);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -136,6 +136,33 @@ public class DetailWeatherActivity extends AppCompatActivity {
         viewPagerDetailAdapter = new ViewPagerDetailAdapter(getSupportFragmentManager(), weatherDetail);
         mViewPagerDetail.setAdapter(viewPagerDetailAdapter);
         mTabLayout.setupWithViewPager(mViewPagerDetail);
+
+        setTabs();
+    }
+
+    private void setTabs() {
+        mTabLayout.getTabAt(0).setIcon(R.drawable.ic_calendar_today);
+        mTabLayout.getTabAt(1).setIcon(R.drawable.ic_trending_up);
+        mTabLayout.getTabAt(2).setIcon(R.drawable.ic_google_photos);
+
+        mTabLayout.getTabAt(0).getIcon().setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_IN);
+
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mTabLayout.getTabAt(tab.getPosition()).getIcon().setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_IN);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                mTabLayout.getTabAt(tab.getPosition()).getIcon().setColorFilter(getResources().getColor(R.color.lightGrey), PorterDuff.Mode.SRC_IN);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     private void tweet(String location, int temperature) {
