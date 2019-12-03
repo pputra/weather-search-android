@@ -69,18 +69,53 @@ public class TodayFragment extends Fragment {
     }
 
     private void setViews(WeatherDetail weatherDetail) {
-        mTextViewTodayWindSpeed.setText(NumberParser.convertNumberToTwoDecimalPLacesString(weatherDetail.getWindSpeed()) + " mph");
-        mTextViewTodayPressure.setText(NumberParser.convertNumberToTwoDecimalPLacesString(weatherDetail.getPressure()) + " mb");
-        mTextViewTodayPrecipitation.setText(NumberParser.convertNumberToTwoDecimalPLacesString(weatherDetail.getPrecipitation()) + " mmph");
-        mTextViewTodayTemperature.setText(weatherDetail.getTemperature() + "°F");
+        if (weatherDetail.getWindSpeed() != null) {
+            mTextViewTodayWindSpeed.setText(NumberParser.convertNumberToTwoDecimalPLacesString(weatherDetail.getWindSpeed()) + " mph");
+        } else {
+            mTextViewTodayWindSpeed.setText("N/A");
+        }
 
+        if (weatherDetail.getPressure() != null) {
+            mTextViewTodayPressure.setText(NumberParser.convertNumberToTwoDecimalPLacesString(weatherDetail.getPressure()) + " mb");
+        } else {
+            mTextViewTodayPressure.setText("N/A");
+        }
+
+        if (weatherDetail.getPrecipitation() != null) {
+
+            mTextViewTodayPrecipitation.setText(NumberParser.convertNumberToTwoDecimalPLacesString(weatherDetail.getPrecipitation()) + " mmph");
+        } else {
+            mTextViewTodayPrecipitation.setText("N/A");
+        }
+
+
+        mTextViewTodayTemperature.setText(weatherDetail.getTemperature() + "°F");
         mImageViewTodaySummary.setImageResource(mIconMap.get(weatherDetail.getIcon()));
         mTextViewTodaySummary.setText(weatherDetail.getSummary());
-        mTextViewTodayHumidity.setText(Integer.toString(NumberParser.convertDecimalToPercentage(weatherDetail.getHumidity())) + "%");
 
-        mTextViewTodayVisibility.setText(NumberParser.convertNumberToTwoDecimalPLacesString(weatherDetail.getVisibility()) + " km");
-        mTextViewTodayCloudCover.setText(Integer.toString(NumberParser.convertDecimalToPercentage(weatherDetail.getCloudCover())) + "%");
-        mTextViewTodayOzone.setText(NumberParser.convertNumberToTwoDecimalPLacesString(weatherDetail.getOzone()) + " DU");
+        if (weatherDetail.getHumidity() != null) {
+            mTextViewTodayHumidity.setText(Integer.toString(NumberParser.convertDecimalToPercentage(weatherDetail.getHumidity())) + "%");
+        } else {
+            mTextViewTodayHumidity.setText("N/A");
+        }
+
+        if (weatherDetail.getVisibility() != null) {
+            mTextViewTodayVisibility.setText(NumberParser.convertNumberToTwoDecimalPLacesString(weatherDetail.getVisibility()) + " km");
+        } else {
+            mTextViewTodayVisibility.setText("N/A");
+        }
+
+        if (weatherDetail.getCloudCover() != null) {
+            mTextViewTodayCloudCover.setText(Integer.toString(NumberParser.convertDecimalToPercentage(weatherDetail.getCloudCover())) + "%");
+        } else {
+            mTextViewTodayCloudCover.setText("N/A");
+        }
+
+        if (weatherDetail.getOzone() != null) {
+            mTextViewTodayOzone.setText(NumberParser.convertNumberToTwoDecimalPLacesString(weatherDetail.getOzone()) + " DU");
+        } else {
+            mTextViewTodayOzone.setText("N/A");
+        }
     }
 
 }

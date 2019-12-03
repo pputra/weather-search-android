@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WeatherDetail extends Weather {
-    private double precipitation;
-    private double cloudCover;
-    private double ozone;
+    private Double precipitation;
+    private Double cloudCover;
+    private Double ozone;
     List<Integer> dailyMinTemperatures;
     List<Integer> dailyMaxTemperatures;
     List<String> photosUrlList;
@@ -19,15 +19,15 @@ public class WeatherDetail extends Weather {
         super(city, lat, lon);
     }
 
-    public double getPrecipitation() {
+    public Double getPrecipitation() {
         return precipitation;
     }
 
-    public double getCloudCover() {
+    public Double getCloudCover() {
         return cloudCover;
     }
 
-    public double getOzone() {
+    public Double getOzone() {
         return ozone;
     }
 

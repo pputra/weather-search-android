@@ -97,13 +97,35 @@ public class DetailWeatherActivity extends AppCompatActivity {
                     weatherDetail.setIcon(currentlyObj.getString("icon"));
                     weatherDetail.setTemperature((int) currentlyObj.getDouble("temperature"));
                     weatherDetail.setSummary(currentlyObj.getString("summary"));
-                    weatherDetail.setHumidity(currentlyObj.getDouble("humidity"));
-                    weatherDetail.setWindSpeed(currentlyObj.getDouble("windSpeed"));
-                    weatherDetail.setVisibility(currentlyObj.getDouble("visibility"));
-                    weatherDetail.setPressure(currentlyObj.getDouble("pressure"));
-                    weatherDetail.setPrecipitation(currentlyObj.getDouble("precipIntensity"));
-                    weatherDetail.setCloudCover(currentlyObj.getDouble("cloudCover"));
-                    weatherDetail.setOzone(currentlyObj.getDouble("ozone"));
+
+                    if (currentlyObj.has("humidity")) {
+                        weatherDetail.setHumidity(currentlyObj.getDouble("humidity"));
+                    }
+
+                    if (currentlyObj.has("windSpeed")) {
+                        weatherDetail.setWindSpeed(currentlyObj.getDouble("windSpeed"));
+                    }
+
+                    if (currentlyObj.has("visibility")) {
+                        weatherDetail.setVisibility(currentlyObj.getDouble("visibility"));
+                    }
+
+                    if (currentlyObj.has("pressure")) {
+                        weatherDetail.setPressure(currentlyObj.getDouble("pressure"));
+                    }
+
+                    if (currentlyObj.has("precipIntensity")) {
+                        weatherDetail.setPrecipitation(currentlyObj.getDouble("precipIntensity"));
+                    }
+
+                    if (currentlyObj.has("cloudCover")) {
+                        weatherDetail.setCloudCover(currentlyObj.getDouble("cloudCover"));
+                    }
+
+                    if (currentlyObj.has("ozone")) {
+                        weatherDetail.setOzone(currentlyObj.getDouble("ozone"));
+                    }
+
                     weatherDetail.setDailyTemperatures(dailyDataList);
 
                     JSONArray photos = response.getJSONArray("photos");

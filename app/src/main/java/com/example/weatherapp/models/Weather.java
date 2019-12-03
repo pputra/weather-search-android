@@ -18,15 +18,15 @@ import java.util.Map;
 
 public class Weather implements Serializable {
     private String location;
-    private double lat;
-    private double lon;
+    private Double lat;
+    private Double lon;
     private String icon;
     private int temperature;
     private String summary;
-    private double humidity;
-    private double windSpeed;
-    private double visibility;
-    private double pressure;
+    private Double humidity;
+    private Double windSpeed;
+    private Double visibility;
+    private Double pressure;
     List<DailyData> dailyDataList;
 
     public Weather(String location, double lat, double lon) {
@@ -63,19 +63,19 @@ public class Weather implements Serializable {
         return summary;
     }
 
-    public double getHumidity() {
+    public Double getHumidity() {
         return humidity;
     }
 
-    public double getWindSpeed() {
+    public Double getWindSpeed() {
         return windSpeed;
     }
 
-    public double getVisibility() {
+    public Double getVisibility() {
         return visibility;
     }
 
-    public double getPressure() {
+    public Double getPressure() {
         return pressure;
     }
 
