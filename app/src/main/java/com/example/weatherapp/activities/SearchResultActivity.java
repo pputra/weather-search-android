@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.example.weatherapp.R;
@@ -21,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SearchResultActivity extends AppCompatActivity {
+    TextView mTextViewSearchResultTitle;
     ViewPager mViewPagerSearchResult;
     LinearLayout mProgressBar;
     ViewPagerSearchResultAdapter mViewPagerSearchResultAdapter;
@@ -30,6 +32,7 @@ public class SearchResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result);
 
+        mTextViewSearchResultTitle = findViewById(R.id.tv_search_result_title);
         mViewPagerSearchResult = findViewById(R.id.view_pager_search_result);
         mProgressBar = findViewById(R.id.pb_search_result_activity);
 
@@ -102,9 +105,11 @@ public class SearchResultActivity extends AppCompatActivity {
     private void toggleProgressBar(boolean show) {
         if (show) {
             mProgressBar.setVisibility(View.VISIBLE);
+            mTextViewSearchResultTitle.setVisibility(View.INVISIBLE);
             mViewPagerSearchResult.setVisibility(View.INVISIBLE);
         } else {
             mProgressBar.setVisibility(View.INVISIBLE);
+            mTextViewSearchResultTitle.setVisibility(View.VISIBLE);
             mViewPagerSearchResult.setVisibility(View.VISIBLE);
         }
     }

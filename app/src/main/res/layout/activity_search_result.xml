@@ -2,41 +2,58 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/colorPrimaryDark"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".activities.SearchResultActivity">
 
     <LinearLayout
         android:id="@+id/pb_search_result_activity"
-        android:visibility="visible"
-        android:orientation="vertical"
-        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
+
         <ProgressBar
-            android:indeterminateDrawable="@drawable/pb_default"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:indeterminateDrawable="@drawable/pb_default" />
+
         <TextView
-            android:text="Fetching Weather"
-            android:textColor="@color/white"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Fetching Weather"
+            android:textColor="@color/white" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_search_result_title"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_marginBottom="712dp"
+        android:layout_marginLeft="10dp"
+        android:text="Search Result"
+        android:textColor="@color/lightGrey"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager_search_result"
-        android:visibility="gone"
         android:layout_width="414dp"
         android:layout_height="729dp"
+        android:visibility="gone"
+        android:layout_marginTop="18dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
