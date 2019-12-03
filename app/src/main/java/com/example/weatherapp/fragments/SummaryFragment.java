@@ -21,6 +21,7 @@ import com.example.weatherapp.R;
 import com.example.weatherapp.activities.DetailWeatherActivity;
 import com.example.weatherapp.activities.MainActivity;
 import com.example.weatherapp.models.Weather;
+import com.example.weatherapp.utils.NumberParser;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 import net.steamcrafted.materialiconlib.MaterialIconView;
@@ -119,10 +120,10 @@ public class SummaryFragment extends Fragment {
     }
 
     private void setMidCard(final Weather weather) {
-        mTextViewHumidity.setText(Double.toString(weather.getHumidity()));
-        mTextViewWindSpeed.setText(Double.toString(weather.getWindSpeed()));
-        mTextViewVisibility.setText(Double.toString(weather.getVisibility()));
-        mTextViewPressure.setText(Double.toString(weather.getPressure()));
+        mTextViewHumidity.setText(Integer.toString(NumberParser.convertDecimalToPercentage(weather.getHumidity())) + "%");
+        mTextViewWindSpeed.setText(NumberParser.convertNumberToTwoDecimalPLacesString(weather.getWindSpeed()) + " mph");
+        mTextViewVisibility.setText(NumberParser.convertNumberToTwoDecimalPLacesString(weather.getVisibility()) + " km");
+        mTextViewPressure.setText(NumberParser.convertNumberToTwoDecimalPLacesString(weather.getPressure()) + " mb");
     }
 
     private void setBotCard(final Weather weather) {

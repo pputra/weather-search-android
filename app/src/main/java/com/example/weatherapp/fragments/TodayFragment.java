@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.weatherapp.R;
 import com.example.weatherapp.models.WeatherDetail;
+import com.example.weatherapp.utils.NumberParser;
 
 import net.steamcrafted.materialiconlib.MaterialIconView;
 
@@ -65,16 +66,17 @@ public class TodayFragment extends Fragment {
     }
 
     private void setViews(WeatherDetail weatherDetail) {
-        mTextViewTodayWindSpeed.setText(Double.toString(weatherDetail.getWindSpeed()));
-        mTextViewTodayPressure.setText(Double.toString(weatherDetail.getPressure()));
-        mTextViewTodayPrecipitation.setText(Double.toString(weatherDetail.getPrecipitation()));
+        mTextViewTodayWindSpeed.setText(NumberParser.convertNumberToTwoDecimalPLacesString(weatherDetail.getWindSpeed()) + " mph");
+        mTextViewTodayPressure.setText(NumberParser.convertNumberToTwoDecimalPLacesString(weatherDetail.getPressure()) + " mb");
+        mTextViewTodayPrecipitation.setText(NumberParser.convertNumberToTwoDecimalPLacesString(weatherDetail.getPrecipitation()) + " mmph");
         mTextViewTodayTemperature.setText(weatherDetail.getTemperature() + "°F");
-        // TODO: REPLACE WEATHER DETAIL ICON
+
         mTextViewTodaySummary.setText(weatherDetail.getSummary());
-        mTextViewTodayHumidity.setText(Double.toString(weatherDetail.getHumidity()));
-        mTextViewTodayVisibility.setText(Double.toString(weatherDetail.getVisibility()));
-        mTextViewTodayCloudCover.setText(Double.toString(weatherDetail.getCloudCover()));
-        mTextViewTodayOzone.setText(Double.toString(weatherDetail.getOzone()));
+        mTextViewTodayHumidity.setText(Integer.toString(NumberParser.convertDecimalToPercentage(weatherDetail.getHumidity())) + "%");
+
+        mTextViewTodayVisibility.setText(NumberParser.convertNumberToTwoDecimalPLacesString(weatherDetail.getVisibility()) + " km");
+        mTextViewTodayCloudCover.setText(Integer.toString(NumberParser.convertDecimalToPercentage(weatherDetail.getCloudCover())) + "%");
+        mTextViewTodayOzone.setText(NumberParser.convertNumberToTwoDecimalPLacesString(weatherDetail.getOzone()) + " DU");
     }
 
 }
