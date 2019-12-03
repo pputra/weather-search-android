@@ -14,7 +14,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".activities.SearchResultActivity"></activity>
         <activity android:name=".activities.DetailWeatherActivity" />
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.MainActivity" android:theme="@style/AppTheme.Launcher" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
